@@ -115,6 +115,58 @@ function checkValidMoves(id) {
                 }
             }
         }
+    } else if (piece.innerHTML==bishop1) {
+        // 28 possible moves, 7 per quadrant
+        const bishopMoves1 = [
+            [addFile(-1), addRank(1)],
+            [addFile(-2), addRank(2)],
+            [addFile(-3), addRank(3)],
+            [addFile(-4), addRank(4)],
+            [addFile(-5), addRank(5)],
+            [addFile(-6), addRank(6)],
+            [addFile(-7), addRank(7)],
+        ];
+        const bishopMoves2 = [
+            [addFile(1), addRank(1)],
+            [addFile(2), addRank(2)],
+            [addFile(3), addRank(3)],
+            [addFile(4), addRank(4)],
+            [addFile(5), addRank(5)],
+            [addFile(6), addRank(6)],
+            [addFile(7), addRank(7)],
+        ];
+        const bishopMoves3 = [
+            [addFile(-1), addRank(-1)],
+            [addFile(-2), addRank(-2)],
+            [addFile(-3), addRank(-3)],
+            [addFile(-4), addRank(-4)],
+            [addFile(-5), addRank(-5)],
+            [addFile(-6), addRank(-6)],
+            [addFile(-7), addRank(-7)],
+        ];
+        const bishopMoves4 = [
+            [addFile(1), addRank(-1)],
+            [addFile(2), addRank(-2)],
+            [addFile(3), addRank(-3)],
+            [addFile(4), addRank(-4)],
+            [addFile(5), addRank(-5)],
+            [addFile(6), addRank(-6)],
+            [addFile(7), addRank(-7)],
+        ];
+        const bishopMoves = [bishopMoves1, bishopMoves2, bishopMoves3, bishopMoves4];
+        for (const quadrant of bishopMoves) {
+            for (const move of quadrant) {
+                const [targetFile, targetRank] = move;
+                if (targetFile && targetRank) {
+                    const targetId = targetFile + targetRank;
+                    if (empty(document.getElementById(targetId).innerHTML)) {
+                        document.getElementById(targetId).style.backgroundColor = valid;
+                    } else {
+                        break
+                    }
+                }
+            }
+        }
     }
 }
 function doMove(id) {
