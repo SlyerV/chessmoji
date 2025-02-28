@@ -405,10 +405,18 @@ function checkValidMoves(id) {
     }
 }
 function changeTurn() {
+    const turnbar = document.getElementById("turnbar")
     if (turn==1) {
         turn=2
+        turnbar.innerHTML="Turn: Black"
+        turnbar.style.color='#555'
+        // turnbar.style.textShadow="1px 1px 3px white"
+        document.getELementby
     } else {
         turn=1
+        turnbar.innerHTML="Turn: White"
+        turnbar.style.color='#eee'
+        // turnbar.style.textShadow="1px 1px 3px black"
     }
 }
 function doMove(id) {

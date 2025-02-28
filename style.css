@@ -1,9 +1,77 @@
+body {
+    position:relative;
+}
+body::before {
+    content: ''; /* Required for pseudo-elements */
+    position: fixed; /* Cover the entire viewport */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('planks.jpg'); /* Replace 'planks.jpg' with your image */
+    opacity: 0.9; /* Semi-transparent */
+    z-index: -1; /* Place it behind other content */
+}
 #screen {
     width:100%;
     height:100%;
     display:flex;
-    justify-content:center;
+    flex-direction: column;
+    /* justify-content:center; */
     align-items:center;
+}
+#screen h1 {
+    /* width:100%; */
+    text-align:center;
+    margin-bottom: 10px; /* Add space between the title and the board */
+    margin-top: 10px;
+    font-family: 'Georgia', serif; /* A more classic font */
+    font-size: 4em;
+    color: #555; /* A dark color */
+    text-shadow:
+        2px 2px 2px white, /* Light offset shadow */
+        -2px -2px 2px #333; /* Dark offset shadow */
+}
+#sidebar {
+    width: 200px;
+    position: fixed;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background-color: rgba(128, 128, 128, 0.5); /* Translucent gray */
+    padding: 10px;
+}
+#sidebar h2 {
+    color: #eee; /* A light gray */
+    font-family: 'Georgia', serif; /* A serif font */
+    font-size: 1.7em; /* Slightly larger */
+    text-align: center;
+    margin-bottom: 15px;
+    text-shadow: 1px 1px 3px black;
+    background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent black background */
+    padding: 10px;
+    border-radius: 5px; /* Rounded corners */
+}
+address {
+    margin-bottom: 35px;
+    font-size: 0.9em;
+    text-align: center;
+    font-family: 'Georgia', serif; /* Classic font */
+    font-style: italic; /* Italicized text */
+    color: #666;
+}
+
+address a {
+    color: #444;
+    text-decoration: underline; /* Keep underline */
+}
+
+address a:hover {
+    transition-duration: 0.2s;
+    color: black;
 }
 span {
     font-size:200%;
