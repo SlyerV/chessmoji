@@ -1,3 +1,3 @@
 chess but emojis
-https://slyerv.github.io/chessmoji/
-chessmoji.vercel.app
+<br>https://slyerv.github.io/chessmoji/
+<br>https://chessmoji.vercel.app
