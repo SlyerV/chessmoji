@@ -34,10 +34,14 @@ let board = [rook2,knight2,bishop2,queen2,king2,bishop2,knight2,rook2,
     rook1,knight1,bishop1,queen1,king1,bishop1,knight1,rook1]
 // Other Vars
 let selected=""
+let checked1=false
+let checked2=false
 let turn = 1
 // Colors
 let select = "yellow"
 let valid = "lime"
+let capture = "orange"
+let checked = "red"
 // Span Element Creation
 let c = 0
 for (x of board) {
@@ -72,6 +76,25 @@ function empty(tile) {
         return false
     }
 }
+function capturable(tile) {
+    try {
+        if (turn==1) {
+            if (blackPieces.includes(tile)) {
+                return true
+            } else {
+                return false
+            }
+        } else {
+            if (whitePieces.includes(tile)) {
+                return true
+            } else {
+                return false
+            }
+        }
+    }catch(err){
+        alert(err)
+    }
+}
 function checkValidMoves(id) {
     const piece = document.getElementById(id)
     // alert(id)
@@ -94,6 +117,12 @@ function checkValidMoves(id) {
                 document.getElementById(file+addRank(2)).style.backgroundColor=valid
             }
         }
+        if (capturable(document.getElementById(addFile(-1)+addRank(1)).innerHTML)) {
+            document.getElementById(addFile(-1)+addRank(1)).style.backgroundColor=capture
+        }
+        if (capturable(document.getElementById(addFile(1)+addRank(1)).innerHTML)) {
+            document.getElementById(addFile(1)+addRank(1)).style.backgroundColor=capture
+        }
     } else if (piece.innerHTML==knight1) {
         // 8 possible moves
         const knightMoves = [
@@ -108,10 +137,13 @@ function checkValidMoves(id) {
         ];
         for (const move of knightMoves) {
             const [targetFile, targetRank] = move;
-            if (targetFile && targetRank) {
+            if (tiles.includes(targetFile + targetRank)) {
                 const targetId = targetFile + targetRank;
                 if (empty(document.getElementById(targetId).innerHTML)) {
                 document.getElementById(targetId).style.backgroundColor = valid;
+                }
+                if (capturable(document.getElementById(targetId).innerHTML)) {
+                    document.getElementById(targetId).style.backgroundColor = capture;
                 }
             }
         }
@@ -157,10 +189,13 @@ function checkValidMoves(id) {
         for (const dir of bishopMoves) {
             for (const move of dir) {
                 const [targetFile, targetRank] = move;
-                if (targetFile && targetRank) {
+                if (tiles.includes(targetFile + targetRank)) {
                     const targetId = targetFile + targetRank;
                     if (empty(document.getElementById(targetId).innerHTML)) {
                         document.getElementById(targetId).style.backgroundColor = valid;
+                    } else if (capturable(document.getElementById(targetId).innerHTML)) {
+                        document.getElementById(targetId).style.backgroundColor = capture
+                        break
                     } else {
                         break
                     }
@@ -215,10 +250,13 @@ function checkValidMoves(id) {
         for (const dir of rookMoves) {
             for (const move of dir) {
                 const [targetFile, targetRank] = move;
-                if (targetFile && targetRank) {
+                if (tiles.includes(targetFile + targetRank)) {
                     const targetId = targetFile + targetRank;
                     if (empty(document.getElementById(targetId).innerHTML)) {
                         document.getElementById(targetId).style.backgroundColor = valid;
+                    } else if (capturable(document.getElementById(targetId).innerHTML)) {
+                        document.getElementById(targetId).style.backgroundColor = capture
+                        break
                     } else {
                         break
                     }
@@ -308,10 +346,13 @@ function checkValidMoves(id) {
         for (const dir of queenMoves) {
             for (const move of dir) {
                 const [targetFile, targetRank] = move;
-                if (targetFile && targetRank) {
+                if (tiles.includes(targetFile + targetRank)) {
                     const targetId = targetFile + targetRank;
                     if (empty(document.getElementById(targetId).innerHTML)) {
                         document.getElementById(targetId).style.backgroundColor = valid;
+                    } else if (capturable(document.getElementById(targetId).innerHTML)) {
+                        document.getElementById(targetId).style.backgroundColor = capture
+                        break
                     } else {
                         break
                     }
@@ -334,10 +375,13 @@ function checkValidMoves(id) {
         ];
         for (const move of kingMoves) {
             const [targetFile, targetRank] = move;
-            if (targetFile && targetRank) {
+            if (tiles.includes(targetFile + targetRank)) {
                 const targetId = targetFile + targetRank;
                 if (empty(document.getElementById(targetId).innerHTML)) {
                 document.getElementById(targetId).style.backgroundColor = valid;
+                }
+                if (capturable(document.getElementById(targetId).innerHTML)) {
+                    document.getElementById(targetId).style.backgroundColor = capture;
                 }
             }
         }
@@ -345,14 +389,14 @@ function checkValidMoves(id) {
 }
 function doMove(id) {
     let tile = document.getElementById(id)
-    if (!whitePieces.includes(tile.innerHTML)&&(turn==1)&&(tile.style.backgroundColor!=valid)) {
+    if (!whitePieces.includes(tile.innerHTML)&&(turn==1)&&(tile.style.backgroundColor!=valid)&&(tile.style.backgroundColor!=capture)) {
         return
     }
     if (tile.style.backgroundColor==select) {
         tile.style.backgroundColor="transparent"
         selected=""
         resetBoard()
-    } else if (tile.style.backgroundColor==valid) {
+    } else if ((tile.style.backgroundColor==valid)||(tile.style.backgroundColor==capture)) {
         resetBoard()
         document.getElementById(id).innerHTML=document.getElementById(selected).innerHTML
         if ((selected[1] % 2 == 0)&&(files.indexOf(selected[0]) % 2 == 0)) {
