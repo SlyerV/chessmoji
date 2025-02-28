@@ -227,6 +227,120 @@ function checkValidMoves(id) {
                 }
             }
         }
+    } else if (piece.innerHTML==queen1) {
+        // 56 possible moves
+        const queenMoves1 = [
+            [addFile(0), addRank(1)],
+            [addFile(0), addRank(2)],
+            [addFile(0), addRank(3)],
+            [addFile(0), addRank(4)],
+            [addFile(0), addRank(5)],
+            [addFile(0), addRank(6)],
+            [addFile(0), addRank(7)],
+        ]
+        // Down
+        const queenMoves3 = [
+            [addFile(0), addRank(-1)],
+            [addFile(0), addRank(-2)],
+            [addFile(0), addRank(-3)],
+            [addFile(0), addRank(-4)],
+            [addFile(0), addRank(-5)],
+            [addFile(0), addRank(-6)],
+            [addFile(0), addRank(-7)],
+        ]
+        // Left
+        const queenMoves5 = [
+            [addFile(-1), addRank(0)],
+            [addFile(-2), addRank(0)],
+            [addFile(-3), addRank(0)],
+            [addFile(-4), addRank(0)],
+            [addFile(-5), addRank(0)],
+            [addFile(-6), addRank(0)],
+            [addFile(-7), addRank(0)],
+        ]
+        // Right
+        const queenMoves7 = [
+            [addFile(1), addRank(0)],
+            [addFile(2), addRank(0)],
+            [addFile(3), addRank(0)],
+            [addFile(4), addRank(0)],
+            [addFile(5), addRank(0)],
+            [addFile(6), addRank(0)],
+            [addFile(7), addRank(0)],
+        ]
+        const queenMoves2 = [
+            [addFile(-1), addRank(1)],
+            [addFile(-2), addRank(2)],
+            [addFile(-3), addRank(3)],
+            [addFile(-4), addRank(4)],
+            [addFile(-5), addRank(5)],
+            [addFile(-6), addRank(6)],
+            [addFile(-7), addRank(7)],
+        ];
+        const queenMoves4 = [
+            [addFile(1), addRank(1)],
+            [addFile(2), addRank(2)],
+            [addFile(3), addRank(3)],
+            [addFile(4), addRank(4)],
+            [addFile(5), addRank(5)],
+            [addFile(6), addRank(6)],
+            [addFile(7), addRank(7)],
+        ];
+        const queenMoves6 = [
+            [addFile(-1), addRank(-1)],
+            [addFile(-2), addRank(-2)],
+            [addFile(-3), addRank(-3)],
+            [addFile(-4), addRank(-4)],
+            [addFile(-5), addRank(-5)],
+            [addFile(-6), addRank(-6)],
+            [addFile(-7), addRank(-7)],
+        ];
+        const queenMoves8 = [
+            [addFile(1), addRank(-1)],
+            [addFile(2), addRank(-2)],
+            [addFile(3), addRank(-3)],
+            [addFile(4), addRank(-4)],
+            [addFile(5), addRank(-5)],
+            [addFile(6), addRank(-6)],
+            [addFile(7), addRank(-7)],
+        ];
+        const queenMoves = [queenMoves1, queenMoves2, queenMoves3, queenMoves4, queenMoves5, queenMoves6, queenMoves7, queenMoves8]
+        for (const dir of queenMoves) {
+            for (const move of dir) {
+                const [targetFile, targetRank] = move;
+                if (targetFile && targetRank) {
+                    const targetId = targetFile + targetRank;
+                    if (empty(document.getElementById(targetId).innerHTML)) {
+                        document.getElementById(targetId).style.backgroundColor = valid;
+                    } else {
+                        break
+                    }
+                } else {
+                    break
+                }
+            }
+        }
+    } else if (piece.innerHTML==king1) {
+        // 8 possible moves
+        const kingMoves = [
+            [addFile(-1), addRank(1)],
+            [addFile(0), addRank(1)],
+            [addFile(1), addRank(1)],
+            [addFile(1), addRank(0)],
+            [addFile(1), addRank(-1)],
+            [addFile(0), addRank(-1)],
+            [addFile(-1), addRank(-1)],
+            [addFile(-1), addRank(0)],
+        ];
+        for (const move of kingMoves) {
+            const [targetFile, targetRank] = move;
+            if (targetFile && targetRank) {
+                const targetId = targetFile + targetRank;
+                if (empty(document.getElementById(targetId).innerHTML)) {
+                document.getElementById(targetId).style.backgroundColor = valid;
+                }
+            }
+        }
     }
 }
 function doMove(id) {
