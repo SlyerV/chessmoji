@@ -164,6 +164,8 @@ function checkValidMoves(id) {
                     } else {
                         break
                     }
+                } else {
+                    break
                 }
             }
         }
