@@ -154,8 +154,66 @@ function checkValidMoves(id) {
             [addFile(7), addRank(-7)],
         ];
         const bishopMoves = [bishopMoves1, bishopMoves2, bishopMoves3, bishopMoves4];
-        for (const quadrant of bishopMoves) {
-            for (const move of quadrant) {
+        for (const dir of bishopMoves) {
+            for (const move of dir) {
+                const [targetFile, targetRank] = move;
+                if (targetFile && targetRank) {
+                    const targetId = targetFile + targetRank;
+                    if (empty(document.getElementById(targetId).innerHTML)) {
+                        document.getElementById(targetId).style.backgroundColor = valid;
+                    } else {
+                        break
+                    }
+                } else {
+                    break
+                }
+            }
+        }
+    } else if (piece.innerHTML==rook1) {
+        // 28 possible moves
+        // Up
+        const rookMoves1 = [
+            [addFile(0), addRank(1)],
+            [addFile(0), addRank(2)],
+            [addFile(0), addRank(3)],
+            [addFile(0), addRank(4)],
+            [addFile(0), addRank(5)],
+            [addFile(0), addRank(6)],
+            [addFile(0), addRank(7)],
+        ]
+        // Down
+        const rookMoves2 = [
+            [addFile(0), addRank(-1)],
+            [addFile(0), addRank(-2)],
+            [addFile(0), addRank(-3)],
+            [addFile(0), addRank(-4)],
+            [addFile(0), addRank(-5)],
+            [addFile(0), addRank(-6)],
+            [addFile(0), addRank(-7)],
+        ]
+        // Left
+        const rookMoves3 = [
+            [addFile(-1), addRank(0)],
+            [addFile(-2), addRank(0)],
+            [addFile(-3), addRank(0)],
+            [addFile(-4), addRank(0)],
+            [addFile(-5), addRank(0)],
+            [addFile(-6), addRank(0)],
+            [addFile(-7), addRank(0)],
+        ]
+        // Right
+        const rookMoves4 = [
+            [addFile(1), addRank(0)],
+            [addFile(2), addRank(0)],
+            [addFile(3), addRank(0)],
+            [addFile(4), addRank(0)],
+            [addFile(5), addRank(0)],
+            [addFile(6), addRank(0)],
+            [addFile(7), addRank(0)],
+        ]
+        const rookMoves = [rookMoves1, rookMoves2, rookMoves3, rookMoves4];
+        for (const dir of rookMoves) {
+            for (const move of dir) {
                 const [targetFile, targetRank] = move;
                 if (targetFile && targetRank) {
                     const targetId = targetFile + targetRank;
