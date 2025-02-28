@@ -133,7 +133,7 @@ function checkValidMoves(id) {
     if ((piece.innerHTML==pawn1)) {
         // 2 possible moves (no en passant yet)
         if (tiles.includes(file+addRank(1))) {
-            if (empty(document.getElementById(file+addRank(1)).innerHTML)&&(!checked1)) {
+            if ((empty(document.getElementById(file+addRank(1)).innerHTML))&&(!checked1)) {
                 document.getElementById(file+addRank(1)).style.backgroundColor=valid
             }
         }
@@ -173,12 +173,12 @@ function checkValidMoves(id) {
     } else if (piece.innerHTML==pawn2) {
         // 2 possible moves (no en passant yet)
         if (tiles.includes(file+addRank(-1))) {
-            if (empty(document.getElementById(file+addRank(-1)).innerHTML)&&(!checked1)) {
+            if ((empty(document.getElementById(file+addRank(-1)).innerHTML))&&(!checked2)) {
                 document.getElementById(file+addRank(-1)).style.backgroundColor=valid
             }
         }
         if (rank=="7") {
-            if ( (empty(document.getElementById(file+addRank(-1)).innerHTML)) && (empty(document.getElementById(file+addRank(-2)).innerHTML)) && (!checked1) ) {
+            if ( (empty(document.getElementById(file+addRank(-1)).innerHTML)) && (empty(document.getElementById(file+addRank(-2)).innerHTML)) && (!checked2)) {
                 document.getElementById(file+addRank(-2)).style.backgroundColor=valid
             }
         }
