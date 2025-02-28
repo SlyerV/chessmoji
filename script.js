@@ -36,6 +36,7 @@ let board = [rook2,knight2,bishop2,queen2,king2,bishop2,knight2,rook2,
 let selected=""
 let checked1=false
 let checked2=false
+let checker=""
 let turn = 1
 // Colors
 let select = "yellow"
@@ -107,13 +108,13 @@ function checkValidMoves(id) {
     function addRank(num) {
         return parseInt(rank)+num
     }
-    if (piece.innerHTML==pawn1) {
-        // 2 possible moves (no en passant)
+    if ((piece.innerHTML==pawn1)) {
+        // 2 possible moves (no en passant yet)
         if (empty(document.getElementById(file+addRank(1)).innerHTML)) {
             document.getElementById(file+addRank(1)).style.backgroundColor=valid
         }
         if (rank=="2") {
-            if (empty(document.getElementById(file+addRank(2)).innerHTML)) {
+            if ( (empty(document.getElementById(file+addRank(1)).innerHTML) && (empty(document.getElementById(file+addRank(2)).innerHTML))) ) {
                 document.getElementById(file+addRank(2)).style.backgroundColor=valid
             }
         }
@@ -123,7 +124,23 @@ function checkValidMoves(id) {
         if (capturable(document.getElementById(addFile(1)+addRank(1)).innerHTML)) {
             document.getElementById(addFile(1)+addRank(1)).style.backgroundColor=capture
         }
-    } else if (piece.innerHTML==knight1) {
+    } else if (piece.innerHTML==pawn2) {
+        // 2 possible moves (no en passant yet)
+        if (empty(document.getElementById(file+addRank(-1)).innerHTML)) {
+            document.getElementById(file+addRank(-1)).style.backgroundColor=valid
+        }
+        if (rank=="7") {
+            if ( (empty(document.getElementById(file+addRank(-1)).innerHTML) && (empty(document.getElementById(file+addRank(-2)).innerHTML)))) {
+                document.getElementById(file+addRank(-2)).style.backgroundColor=valid
+            }
+        }
+        if (capturable(document.getElementById(addFile(-1)+addRank(-1)).innerHTML)) {
+            document.getElementById(addFile(-1)+addRank(-1)).style.backgroundColor=capture
+        }
+        if (capturable(document.getElementById(addFile(1)+addRank(-1)).innerHTML)) {
+            document.getElementById(addFile(1)+addRank(-1)).style.backgroundColor=capture
+        }
+    } else if ((piece.innerHTML==knight1)||(piece.innerHTML==knight2)) {
         // 8 possible moves
         const knightMoves = [
             [addFile(-1), addRank(2)],
@@ -147,7 +164,7 @@ function checkValidMoves(id) {
                 }
             }
         }
-    } else if (piece.innerHTML==bishop1) {
+    } else if ((piece.innerHTML==bishop1)||(piece.innerHTML==bishop2)) {
         // 28 possible moves, 7 per quadrant
         const bishopMoves1 = [
             [addFile(-1), addRank(1)],
@@ -204,7 +221,7 @@ function checkValidMoves(id) {
                 }
             }
         }
-    } else if (piece.innerHTML==rook1) {
+    } else if ((piece.innerHTML==rook1)||(piece.innerHTML==rook2)) {
         // 28 possible moves
         // Up
         const rookMoves1 = [
@@ -265,7 +282,7 @@ function checkValidMoves(id) {
                 }
             }
         }
-    } else if (piece.innerHTML==queen1) {
+    } else if ((piece.innerHTML==queen1)||(piece.innerHTML==queen2)) {
         // 56 possible moves
         const queenMoves1 = [
             [addFile(0), addRank(1)],
@@ -361,7 +378,7 @@ function checkValidMoves(id) {
                 }
             }
         }
-    } else if (piece.innerHTML==king1) {
+    } else if ((piece.innerHTML==king1)||(piece.innerHTML==king2)) {
         // 8 possible moves
         const kingMoves = [
             [addFile(-1), addRank(1)],
@@ -387,9 +404,19 @@ function checkValidMoves(id) {
         }
     }
 }
+function changeTurn() {
+    if (turn==1) {
+        turn=2
+    } else {
+        turn=1
+    }
+}
 function doMove(id) {
     let tile = document.getElementById(id)
     if (!whitePieces.includes(tile.innerHTML)&&(turn==1)&&(tile.style.backgroundColor!=valid)&&(tile.style.backgroundColor!=capture)) {
+        return
+    }
+    if (!blackPieces.includes(tile.innerHTML)&&(turn==2)&&(tile.style.backgroundColor!=valid)&&(tile.style.backgroundColor!=capture)) {
         return
     }
     if (tile.style.backgroundColor==select) {
@@ -406,6 +433,7 @@ function doMove(id) {
         } else {
             document.getElementById(selected).innerHTML=black
         }
+        changeTurn()
     } else {
         resetBoard()
         tile.style.backgroundColor=select
