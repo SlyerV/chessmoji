@@ -37,6 +37,8 @@ let selected=""
 let checked1=false
 let checked2=false
 let checker=""
+let territoryCheck = false
+let territory=[]
 let turn = 1
 // Colors
 let select = "yellow"
@@ -66,7 +68,9 @@ function resetBoard() {
     let c = 0
     for (x of board) {
         document.getElementById(tiles[c]).innerHTML = x
-        document.getElementById(tiles[c]).style.backgroundColor="transparent"
+        if (document.getElementById(tiles[c]).style.backgroundColor!=checked) {
+            document.getElementById(tiles[c]).style.backgroundColor="transparent"
+        }
         c+=1
     }
 }
@@ -77,23 +81,41 @@ function empty(tile) {
         return false
     }
 }
-function capturable(tile) {
-    try {
-        if (turn==1) {
-            if (blackPieces.includes(tile)) {
-                return true
-            } else {
-                return false
-            }
+function check(tile) {
+    if (turn==1) {
+        if (tile==king2) {
+            return true
         } else {
-            if (whitePieces.includes(tile)) {
-                return true
-            } else {
-                return false
-            }
+            return false
         }
-    }catch(err){
-        alert(err)
+    } else {
+        if (tile==king1) {
+            return true
+        } else {
+            return false
+        }
+    }
+}
+function capturable(tile) {
+    if (turn==1) {
+        if (blackPieces.includes(tile)) {
+            return true
+        } else {
+            return false
+        }
+    } else {
+        if (whitePieces.includes(tile)) {
+            return true
+        } else {
+            return false
+        }
+    }
+}
+function territoryPush(id) {
+    if (territoryCheck) {
+        // alert(id)
+        territory.push(id)
+        // document.getElementById(id).style.backgroundColor=checked
     }
 }
 function checkValidMoves(id) {
@@ -110,35 +132,83 @@ function checkValidMoves(id) {
     }
     if ((piece.innerHTML==pawn1)) {
         // 2 possible moves (no en passant yet)
-        if (empty(document.getElementById(file+addRank(1)).innerHTML)) {
-            document.getElementById(file+addRank(1)).style.backgroundColor=valid
+        if (tiles.includes(file+addRank(1))) {
+            if (empty(document.getElementById(file+addRank(1)).innerHTML)&&(!checked1)) {
+                document.getElementById(file+addRank(1)).style.backgroundColor=valid
+            }
         }
         if (rank=="2") {
-            if ( (empty(document.getElementById(file+addRank(1)).innerHTML) && (empty(document.getElementById(file+addRank(2)).innerHTML))) ) {
+            if ( (empty(document.getElementById(file+addRank(1)).innerHTML)) && (empty(document.getElementById(file+addRank(2)).innerHTML)) && (!checked1) ) {
                 document.getElementById(file+addRank(2)).style.backgroundColor=valid
             }
         }
-        if (capturable(document.getElementById(addFile(-1)+addRank(1)).innerHTML)) {
-            document.getElementById(addFile(-1)+addRank(1)).style.backgroundColor=capture
+        if (tiles.includes(addFile(-1)+addRank(1))) {
+            if (check(document.getElementById(addFile(-1)+addRank(1)).innerHTML)) {
+                document.getElementById(addFile(-1)+addRank(1)).style.backgroundColor=checked
+                checked2=true
+                checker=id
+                return
+            }
+            if (empty(document.getElementById(addFile(-1)+addRank(1)).innerHTML)) {
+                territoryPush(addFile(-1)+addRank(1))
+            }
+            if (capturable(document.getElementById(addFile(-1)+addRank(1)).innerHTML)) {
+                document.getElementById(addFile(-1)+addRank(1)).style.backgroundColor=capture
+            }
         }
-        if (capturable(document.getElementById(addFile(1)+addRank(1)).innerHTML)) {
-            document.getElementById(addFile(1)+addRank(1)).style.backgroundColor=capture
+        if (tiles.includes(addFile(1)+addRank(1))) {
+            if (check(document.getElementById(addFile(1)+addRank(1)).innerHTML)) {
+                document.getElementById(addFile(1)+addRank(1)).style.backgroundColor=checked
+                checked2=true
+                checker=id
+                return
+            }
+            if (empty(document.getElementById(addFile(1)+addRank(1)).innerHTML)) {
+                territoryPush(addFile(1)+addRank(1))
+            }
+            if (capturable(document.getElementById(addFile(1)+addRank(1)).innerHTML)) {
+                document.getElementById(addFile(1)+addRank(1)).style.backgroundColor=capture
+            }
         }
     } else if (piece.innerHTML==pawn2) {
         // 2 possible moves (no en passant yet)
-        if (empty(document.getElementById(file+addRank(-1)).innerHTML)) {
-            document.getElementById(file+addRank(-1)).style.backgroundColor=valid
+        if (tiles.includes(file+addRank(-1))) {
+            if (empty(document.getElementById(file+addRank(-1)).innerHTML)&&(!checked1)) {
+                document.getElementById(file+addRank(-1)).style.backgroundColor=valid
+            }
         }
         if (rank=="7") {
-            if ( (empty(document.getElementById(file+addRank(-1)).innerHTML) && (empty(document.getElementById(file+addRank(-2)).innerHTML)))) {
+            if ( (empty(document.getElementById(file+addRank(-1)).innerHTML)) && (empty(document.getElementById(file+addRank(-2)).innerHTML)) && (!checked1) ) {
                 document.getElementById(file+addRank(-2)).style.backgroundColor=valid
             }
         }
-        if (capturable(document.getElementById(addFile(-1)+addRank(-1)).innerHTML)) {
-            document.getElementById(addFile(-1)+addRank(-1)).style.backgroundColor=capture
+        if (tiles.includes(addFile(-1)+addRank(-1))) {
+            if (check(document.getElementById(addFile(-1)+addRank(-1)).innerHTML)) {
+                document.getElementById(addFile(-1)+addRank(-1)).style.backgroundColor=checked
+                checked2=true
+                checker=id
+                return
+            }
+            if (empty(document.getElementById(addFile(-1)+addRank(-1)).innerHTML)) {
+                territoryPush(addFile(-1)+addRank(-1))
+            }
+            if (capturable(document.getElementById(addFile(-1)+addRank(-1)).innerHTML)) {
+                document.getElementById(addFile(-1)+addRank(-1)).style.backgroundColor=capture
+            }
         }
-        if (capturable(document.getElementById(addFile(1)+addRank(-1)).innerHTML)) {
-            document.getElementById(addFile(1)+addRank(-1)).style.backgroundColor=capture
+        if (tiles.includes(addFile(1)+addRank(-1))) {
+            if (check(document.getElementById(addFile(1)+addRank(-1)).innerHTML)) {
+                document.getElementById(addFile(1)+addRank(-1)).style.backgroundColor=checked
+                checked2=true
+                checker=id
+                return
+            }
+            if (empty(document.getElementById(addFile(1)+addRank(-1)).innerHTML)) {
+                territoryPush(addFile(1)+addRank(-1))
+            }
+            if (capturable(document.getElementById(addFile(1)+addRank(-1)).innerHTML)) {
+                document.getElementById(addFile(1)+addRank(-1)).style.backgroundColor=capture
+            }
         }
     } else if ((piece.innerHTML==knight1)||(piece.innerHTML==knight2)) {
         // 8 possible moves
@@ -155,9 +225,23 @@ function checkValidMoves(id) {
         for (const move of knightMoves) {
             const [targetFile, targetRank] = move;
             if (tiles.includes(targetFile + targetRank)) {
+                if (((checked1==true)||(checked2==true))&&((targetFile+targetRank)!=checker)&&(!territoryCheck)) {
+                    continue
+                }
                 const targetId = targetFile + targetRank;
+                if (check(document.getElementById(targetId).innerHTML)) {
+                    document.getElementById(targetId).style.backgroundColor=checked
+                    if (turn==1) {
+                        checked2=true
+                    } else {
+                        checked1=true
+                    }
+                    checker=id
+                    break
+                }
                 if (empty(document.getElementById(targetId).innerHTML)) {
-                document.getElementById(targetId).style.backgroundColor = valid;
+                    document.getElementById(targetId).style.backgroundColor = valid;
+                    territoryPush(targetId)
                 }
                 if (capturable(document.getElementById(targetId).innerHTML)) {
                     document.getElementById(targetId).style.backgroundColor = capture;
@@ -208,8 +292,36 @@ function checkValidMoves(id) {
                 const [targetFile, targetRank] = move;
                 if (tiles.includes(targetFile + targetRank)) {
                     const targetId = targetFile + targetRank;
+                    if (check(document.getElementById(targetId).innerHTML)) {
+                        document.getElementById(targetId).style.backgroundColor=checked
+                        if (turn==1) {
+                            checked2=true
+                        } else {
+                            checked1=true
+                        }
+                        checker=id
+                        break
+                    }
+                    if (((checked1==true)||(checked2==true))&&((targetFile+targetRank)!=checker)&&(!territoryCheck)) {
+                        if (empty(document.getElementById(targetId).innerHTML)) {
+                            continue
+                        } else {
+                            break
+                        }
+                    }
+                    if (check(document.getElementById(targetId).innerHTML)) {
+                    document.getElementById(targetId).style.backgroundColor=checked
+                    if (turn==1) {
+                        checked2=true
+                    } else {
+                        checked1=true
+                    }
+                    checker=id
+                    break
+                }
                     if (empty(document.getElementById(targetId).innerHTML)) {
                         document.getElementById(targetId).style.backgroundColor = valid;
+                        territoryPush(targetId)
                     } else if (capturable(document.getElementById(targetId).innerHTML)) {
                         document.getElementById(targetId).style.backgroundColor = capture
                         break
@@ -269,8 +381,26 @@ function checkValidMoves(id) {
                 const [targetFile, targetRank] = move;
                 if (tiles.includes(targetFile + targetRank)) {
                     const targetId = targetFile + targetRank;
+                    if (check(document.getElementById(targetId).innerHTML)) {
+                        document.getElementById(targetId).style.backgroundColor=checked
+                        if (turn==1) {
+                            checked2=true
+                        } else {
+                            checked1=true
+                        }
+                        checker=id
+                        break
+                    }
+                    if (((checked1==true)||(checked2==true))&&((targetFile+targetRank)!=checker)&&(!territoryCheck)) {
+                        if (empty(document.getElementById(targetId).innerHTML)) {
+                            continue
+                        } else {
+                            break
+                        }
+                    }
                     if (empty(document.getElementById(targetId).innerHTML)) {
                         document.getElementById(targetId).style.backgroundColor = valid;
+                        territoryPush(targetId)
                     } else if (capturable(document.getElementById(targetId).innerHTML)) {
                         document.getElementById(targetId).style.backgroundColor = capture
                         break
@@ -365,8 +495,26 @@ function checkValidMoves(id) {
                 const [targetFile, targetRank] = move;
                 if (tiles.includes(targetFile + targetRank)) {
                     const targetId = targetFile + targetRank;
+                    if (check(document.getElementById(targetId).innerHTML)) {
+                        document.getElementById(targetId).style.backgroundColor=checked
+                        if (turn==1) {
+                            checked2=true
+                        } else {
+                            checked1=true
+                        }
+                        checker=id
+                        break
+                    }
+                    if (((checked1==true)||(checked2==true))&&((targetId)!=checker)&&(!territoryCheck)) {
+                        if (empty(document.getElementById(targetId).innerHTML)) {
+                            continue
+                        } else {
+                            break
+                        }
+                    }
                     if (empty(document.getElementById(targetId).innerHTML)) {
                         document.getElementById(targetId).style.backgroundColor = valid;
+                        territoryPush(targetId)
                     } else if (capturable(document.getElementById(targetId).innerHTML)) {
                         document.getElementById(targetId).style.backgroundColor = capture
                         break
@@ -393,9 +541,18 @@ function checkValidMoves(id) {
         for (const move of kingMoves) {
             const [targetFile, targetRank] = move;
             if (tiles.includes(targetFile + targetRank)) {
+                if (((checked1)||(checked2))&&((targetFile+targetRank)!=checker)&&(!territoryCheck)) {
+                    if (territory.includes(targetFile+targetRank)) {
+                        continue
+                    } else {
+                        // alert(territory)
+                    }
+                }
                 const targetId = targetFile + targetRank;
-                if (empty(document.getElementById(targetId).innerHTML)) {
-                document.getElementById(targetId).style.backgroundColor = valid;
+                if ((empty(document.getElementById(targetId).innerHTML))&&(!(territory.includes(targetId)))) {
+                    // alert(territory)
+                    document.getElementById(targetId).style.backgroundColor = valid;
+                    territoryPush(targetId)
                 }
                 if (capturable(document.getElementById(targetId).innerHTML)) {
                     document.getElementById(targetId).style.backgroundColor = capture;
@@ -403,6 +560,32 @@ function checkValidMoves(id) {
             }
         }
     }
+}
+function checkTerritory() {
+    try {
+        territory=[]
+        territoryCheck=true
+        if (turn==1){
+            for (x of tiles) {
+                if (whitePieces.includes(document.getElementById(x).innerHTML)) {
+                    // alert(x+"id")
+                    checkValidMoves(x)
+                }
+            }
+        } else {
+            for (x of tiles) {
+                if (blackPieces.includes(document.getElementById(x).innerHTML)) {
+                    // alert(document.getElementById(x).innerHTML)
+                    checkValidMoves(x)
+                }
+            }
+        }
+        // alert(territory)
+        territoryCheck=false
+    } catch (err) {
+        alert(err.stack)
+    }
+    resetBoard()
 }
 function changeTurn() {
     const turnbar = document.getElementById("turnbar")
@@ -428,7 +611,14 @@ function doMove(id) {
         return
     }
     if (tile.style.backgroundColor==select) {
-        tile.style.backgroundColor="transparent"
+        if ((checked1&&tile.innerHTML==king1)||(checked2&&tile.innerHTML==king2)) {
+            // changeTurn()
+            // checkTerritory()
+            // changeTurn()
+            tile.style.backgroundColor=checked
+        } else {
+            tile.style.backgroundColor="transparent"
+        }
         selected=""
         resetBoard()
     } else if ((tile.style.backgroundColor==valid)||(tile.style.backgroundColor==capture)) {
@@ -441,6 +631,25 @@ function doMove(id) {
         } else {
             document.getElementById(selected).innerHTML=black
         }
+        if (checked1) {
+            checked1=false
+            for (x of tiles) {
+                if (document.getElementById(x).innerHTML==king1) {
+                    document.getElementById(x).style.backgroundColor="transparent"
+                }
+            }
+        } else if (checked2) {
+            checked2=false
+            for (x of tiles) {
+                if (document.getElementById(x).innerHTML==king2) {
+                    document.getElementById(x).style.backgroundColor="transparent"
+                }
+            }
+        }
+        saveBoard()
+        checkValidMoves(id)
+        resetBoard()
+        checkTerritory()
         changeTurn()
     } else {
         resetBoard()
