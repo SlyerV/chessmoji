@@ -35,6 +35,7 @@ let board = [rook2,knight2,bishop2,queen2,king2,bishop2,knight2,rook2,
 // SFX
 const captureSFX = new Audio("./sfx/capture.mp3")
 const moveSFX = new Audio("./sfx/move-self.mp3")
+const checkSFX = new Audio("./sfx/move-check.mp3")
 // Other Vars
 let selected=""
 let checked1=false
@@ -74,10 +75,14 @@ function resetBoard() {
         if ((document.getElementById(tiles[c]).innerHTML==king1)) {
             if (!checked1) {
                 document.getElementById(tiles[c]).style.backgroundColor="transparent"
+            } else if (document.getElementById(tiles[c]).style.backgroundColor=checked) {
+                document.getElementById(tiles[c]).style.backgroundColor=checked
             }
         } else if ((document.getElementById(tiles[c]).innerHTML==king2)) {
             if (!checked2) {
                 document.getElementById(tiles[c]).style.backgroundColor="transparent"
+            } else if (document.getElementById(tiles[c]).style.backgroundColor=checked) {
+                document.getElementById(tiles[c]).style.backgroundColor=checked
             }
         } else {
             document.getElementById(tiles[c]).style.backgroundColor="transparent"
@@ -155,6 +160,8 @@ function checkValidMoves(id) {
         }
         if (tiles.includes(addFile(-1)+addRank(1))) {
             if (check(document.getElementById(addFile(-1)+addRank(1)).innerHTML)) {
+                checkSFX.load()
+                checkSFX.play()
                 document.getElementById(addFile(-1)+addRank(1)).style.backgroundColor=checked
                 checked2=true
                 checker=id
@@ -169,6 +176,8 @@ function checkValidMoves(id) {
         }
         if (tiles.includes(addFile(1)+addRank(1))) {
             if (check(document.getElementById(addFile(1)+addRank(1)).innerHTML)) {
+                checkSFX.load()
+                checkSFX.play()
                 document.getElementById(addFile(1)+addRank(1)).style.backgroundColor=checked
                 checked2=true
                 checker=id
@@ -195,6 +204,8 @@ function checkValidMoves(id) {
         }
         if (tiles.includes(addFile(-1)+addRank(-1))) {
             if (check(document.getElementById(addFile(-1)+addRank(-1)).innerHTML)) {
+                checkSFX.load()
+                checkSFX.play()
                 document.getElementById(addFile(-1)+addRank(-1)).style.backgroundColor=checked
                 checked2=true
                 checker=id
@@ -209,6 +220,8 @@ function checkValidMoves(id) {
         }
         if (tiles.includes(addFile(1)+addRank(-1))) {
             if (check(document.getElementById(addFile(1)+addRank(-1)).innerHTML)) {
+                checkSFX.load()
+                checkSFX.play()
                 document.getElementById(addFile(1)+addRank(-1)).style.backgroundColor=checked
                 checked2=true
                 checker=id
@@ -241,6 +254,8 @@ function checkValidMoves(id) {
                 }
                 const targetId = targetFile + targetRank;
                 if (check(document.getElementById(targetId).innerHTML)) {
+                    checkSFX.load()
+                    checkSFX.play()
                     document.getElementById(targetId).style.backgroundColor=checked
                     if (turn==1) {
                         checked2=true
@@ -304,6 +319,8 @@ function checkValidMoves(id) {
                 if (tiles.includes(targetFile + targetRank)) {
                     const targetId = targetFile + targetRank;
                     if (check(document.getElementById(targetId).innerHTML)) {
+                        checkSFX.load()
+                        checkSFX.play()
                         document.getElementById(targetId).style.backgroundColor=checked
                         if (turn==1) {
                             checked2=true
@@ -321,14 +338,16 @@ function checkValidMoves(id) {
                         }
                     }
                     if (check(document.getElementById(targetId).innerHTML)) {
-                    document.getElementById(targetId).style.backgroundColor=checked
-                    if (turn==1) {
-                        checked2=true
-                    } else {
-                        checked1=true
-                    }
-                    checker=id
-                    break
+                        checkSFX.load()
+                        checkSFX.play()
+                        document.getElementById(targetId).style.backgroundColor=checked
+                        if (turn==1) {
+                            checked2=true
+                        } else {
+                            checked1=true
+                        }
+                        checker=id
+                        break
                 }
                     if (empty(document.getElementById(targetId).innerHTML)) {
                         document.getElementById(targetId).style.backgroundColor = valid;
@@ -393,6 +412,8 @@ function checkValidMoves(id) {
                 if (tiles.includes(targetFile + targetRank)) {
                     const targetId = targetFile + targetRank;
                     if (check(document.getElementById(targetId).innerHTML)) {
+                        checkSFX.load()
+                        checkSFX.play()
                         document.getElementById(targetId).style.backgroundColor=checked
                         if (turn==1) {
                             checked2=true
@@ -507,6 +528,8 @@ function checkValidMoves(id) {
                 if (tiles.includes(targetFile + targetRank)) {
                     const targetId = targetFile + targetRank;
                     if (check(document.getElementById(targetId).innerHTML)) {
+                        checkSFX.load()
+                        checkSFX.play()
                         document.getElementById(targetId).style.backgroundColor=checked
                         if (turn==1) {
                             checked2=true
