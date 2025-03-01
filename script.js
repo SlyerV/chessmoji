@@ -32,6 +32,9 @@ let board = [rook2,knight2,bishop2,queen2,king2,bishop2,knight2,rook2,
     black,white,black,white,black,white,black,white,
     pawn1,pawn1,pawn1,pawn1,pawn1,pawn1,pawn1,pawn1,
     rook1,knight1,bishop1,queen1,king1,bishop1,knight1,rook1]
+// SFX
+const captureSFX = new Audio("./sfx/capture.mp3")
+const moveSFX = new Audio("./sfx/move-self.mp3")
 // Other Vars
 let selected=""
 let checked1=false
@@ -68,7 +71,15 @@ function resetBoard() {
     let c = 0
     for (x of board) {
         document.getElementById(tiles[c]).innerHTML = x
-        if (document.getElementById(tiles[c]).style.backgroundColor!=checked) {
+        if ((document.getElementById(tiles[c]).innerHTML==king1)) {
+            if (!checked1) {
+                document.getElementById(tiles[c]).style.backgroundColor="transparent"
+            }
+        } else if ((document.getElementById(tiles[c]).innerHTML==king2)) {
+            if (!checked2) {
+                document.getElementById(tiles[c]).style.backgroundColor="transparent"
+            }
+        } else {
             document.getElementById(tiles[c]).style.backgroundColor="transparent"
         }
         c+=1
@@ -622,6 +633,13 @@ function doMove(id) {
         selected=""
         resetBoard()
     } else if ((tile.style.backgroundColor==valid)||(tile.style.backgroundColor==capture)) {
+        if (tile.style.backgroundColor==capture) {
+            captureSFX.load()
+            captureSFX.play()
+        } else {
+            moveSFX.load()
+            moveSFX.play()
+        }
         resetBoard()
         document.getElementById(id).innerHTML=document.getElementById(selected).innerHTML
         if ((selected[1] % 2 == 0)&&(files.indexOf(selected[0]) % 2 == 0)) {
