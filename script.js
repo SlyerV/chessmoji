@@ -249,9 +249,14 @@ function checkValidMoves(id) {
             if (empty(document.getElementById(addFile(-1)+addRank(1)).innerHTML)) {
                 territoryPush(addFile(-1)+addRank(1))
             }
-            if (capturable(document.getElementById(addFile(-1)+addRank(1)).innerHTML)&&(!checked1)) {
-                document.getElementById(addFile(-1)+addRank(1)).style.backgroundColor=capture
-                capturePush(addFile(-1)+addRank(1))
+            if (capturable(document.getElementById(addFile(-1)+addRank(1)).innerHTML)) {
+                if (!checked1) {
+                    document.getElementById(addFile(-1)+addRank(1)).style.backgroundColor=capture
+                    capturePush(addFile(-1)+addRank(1))
+                } else if ((addFile(-1)+addRank(1))==checker) {
+                    document.getElementById(addFile(-1)+addRank(1)).style.backgroundColor=capture
+                    capturePush(addFile(-1)+addRank(1))
+                }
             }
         }
         if (tiles.includes(addFile(1)+addRank(1))) {
@@ -274,9 +279,14 @@ function checkValidMoves(id) {
             if (empty(document.getElementById(addFile(1)+addRank(1)).innerHTML)) {
                 territoryPush(addFile(1)+addRank(1))
             }
-            if (capturable(document.getElementById(addFile(1)+addRank(1)).innerHTML)&&(!checked1)) {
-                document.getElementById(addFile(1)+addRank(1)).style.backgroundColor=capture
-                capturePush(addFile(1)+addRank(1))
+            if (capturable(document.getElementById(addFile(1)+addRank(1)).innerHTML)) {
+                if (!checked1) {
+                    document.getElementById(addFile(1)+addRank(1)).style.backgroundColor=capture
+                    capturePush(addFile(1)+addRank(1))
+                } else if ((addFile(1)+addRank(1))==checker) {
+                    document.getElementById(addFile(1)+addRank(1)).style.backgroundColor=capture
+                    capturePush(addFile(1)+addRank(1))
+                }
             }
         }
     } else if (piece.innerHTML==pawn2) {
@@ -360,9 +370,14 @@ function checkValidMoves(id) {
             if (empty(document.getElementById(addFile(-1)+addRank(-1)).innerHTML)) {
                 territoryPush(addFile(-1)+addRank(-1))
             }
-            if (capturable(document.getElementById(addFile(-1)+addRank(-1)).innerHTML)&&(!checked2)) {
-                document.getElementById(addFile(-1)+addRank(-1)).style.backgroundColor=capture
-                capturePush(addFile(-1)+addRank(-1))
+            if (capturable(document.getElementById(addFile(-1)+addRank(-1)).innerHTML)) {
+                if (!checked2) {
+                    document.getElementById(addFile(-1)+addRank(-1)).style.backgroundColor=capture
+                    capturePush(addFile(-1)+addRank(-1))
+                } else if ((addFile(-1)+addRank(-1))==checker) {
+                    document.getElementById(addFile(-1)+addRank(-1)).style.backgroundColor=capture
+                    capturePush(addFile(-1)+addRank(-1))
+                }
             }
         }
         if (tiles.includes(addFile(1)+addRank(-1))) {
@@ -385,9 +400,17 @@ function checkValidMoves(id) {
             if (empty(document.getElementById(addFile(1)+addRank(-1)).innerHTML)) {
                 territoryPush(addFile(1)+addRank(-1))
             }
-            if (capturable(document.getElementById(addFile(1)+addRank(-1)).innerHTML)&&(!checked2)) {
-                document.getElementById(addFile(1)+addRank(-1)).style.backgroundColor=capture
-                capturePush(addFile(1)+addRank(-1))
+            if (capturable(document.getElementById(addFile(1)+addRank(-1)).innerHTML)) {
+                if (!checked2) {
+                    document.getElementById(addFile(1)+addRank(-1)).style.backgroundColor=capture
+                    capturePush(addFile(1)+addRank(-1))
+                } else if ((addFile(1)+addRank(-1))==checker) {
+                    document.getElementById(addFile(1)+addRank(-1)).style.backgroundColor=capture
+                    capturePush(addFile(1)+addRank(-1))
+                } else {
+                    alert((addFile(1)+addRank(-1)))
+                    alert(checker)
+                }
             }
         }
     } else if ((piece.innerHTML==knight1)||(piece.innerHTML==knight2)) {
