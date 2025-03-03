@@ -1,3 +1,4 @@
+// Fetching Emoji List from Unicode
 let emojiList = [];
 const regIndicators = [
     '🇦', '🇧', '🇨', '🇩', '🇪', '🇫',
@@ -20,7 +21,7 @@ function sliceColumn() {
                 rows.map(row => {
                     const columns = row.split('\t');
                     const roww = columns[0];
-                    const emoji = roww.slice(79,81)
+                    let emoji = roww.slice(79,81).trim()
                     if (isEmoji(emoji)&&(!disallowedChars.includes(emoji))&&(!regIndicators.includes(emoji)))
                         emojiList.push(roww.slice(79, 81));
                 });
@@ -35,6 +36,7 @@ function sliceColumn() {
 
 sliceColumn().then(() => {
 });
+
 // Chess Tiles
 const files = ["a","b","c","d","e","f","g","h"]
 const ranks = ["8","7","6","5","4","3","2","1"]
@@ -125,6 +127,7 @@ let board = [rook2,knight2,bishop2,queen2,king2,bishop2,knight2,rook2,
 const captureSFX = new Audio("./sfx/capture.mp3")
 const moveSFX = new Audio("./sfx/move-self.mp3")
 const checkSFX = new Audio("./sfx/move-check.mp3")
+const randomizeSFX = new Audio("./sfx/notify.mp3")
 // Other Vars
 let selected=""
 let checked1=false
@@ -1082,6 +1085,8 @@ for (let p of pieceList) {
     // });
 }
 function randomizeEmojis() {
+    randomizeSFX.load()
+    randomizeSFX.play()
     const emojis = document.getElementsByClassName("emoji")
     for (let x = 0; x < emojis.length; x++) {
         const emoji = emojis[x]
