@@ -1,3 +1,5 @@
+/* Gemini helped with CSS */
+
 body {
     position:relative;
 }
@@ -125,8 +127,9 @@ input {
     text-align: center;
     flex-shrink: 0; /* Prevent input from shrinking when content overflows*/
 }
-#cKing2 {
-    margin-bottom: 20px;
+#randomize {
+    margin-top: 20px;
+    margin-bottom: 25px;
 }
 /* Style for inputs on focus */
 #rightbar input[type="text"]:focus {
@@ -134,4 +137,31 @@ input {
     border-color: #66afe9; /* Change border color on focus */
     box-shadow: 0 0 8px rgba(102, 175, 233, 0.6); /* Add focus shadow */
     background-color: #ccffcc /* make background brighter on focus*/
+}
+#randomize {
+    margin-top: 20px;
+    margin-bottom: 25px;
+    background-color: #FFA500; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 10px; /* Rounded corners */
+    cursor: pointer; /* Change cursor to pointer */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Add a shadow */
+    transition: 0.3s; /* Smooth transition for hover effect */
+}
+
+#randomize:hover {
+    background-color: #E68A00; /* Darker green on hover */
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2); /* Larger shadow on hover */
+}
+
+#randomize:active {
+    background-color: #CC7A00; /* Even darker green when clicked */
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2); /* Smaller shadow when clicked */
+    /* transform: translateY(2px); Move the button down slightly */
 }

@@ -1,3 +1,40 @@
+let emojiList = [];
+const regIndicators = [
+    '🇦', '🇧', '🇨', '🇩', '🇪', '🇫',
+    '🇬', '🇭', '🇮', '🇯', '🇰', '🇱',
+    '🇲', '🇳', '🇴', '🇵', '🇶', '🇷',
+    '🇸', '🇹', '🇺', '🇻', '🇼', '🇽',
+    '🇾', '🇿'
+]
+const disallowedChars=["🏻","🏼","🏽","🏾","🏿", "�", "‍", "♂","♀‍", "🦰","🦱","🦳","🦲","️"]
+function isEmoji(str) {
+    const emojiRegex = /(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/g;
+    return emojiRegex.test(str);
+}
+function sliceColumn() {
+    return new Promise((resolve, reject) => {
+        fetch('emoji-list.txt')
+            .then(response => response.text())
+            .then(data => {
+                const rows = data.split('\n');
+                rows.map(row => {
+                    const columns = row.split('\t');
+                    const roww = columns[0];
+                    const emoji = roww.slice(79,81)
+                    if (isEmoji(emoji)&&(!disallowedChars.includes(emoji))&&(!regIndicators.includes(emoji)))
+                        emojiList.push(roww.slice(79, 81));
+                });
+                resolve(); // Resolve the promise when done
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                reject(error); // Reject the promise on error
+            });
+    });
+}
+
+sliceColumn().then(() => {
+});
 // Chess Tiles
 const files = ["a","b","c","d","e","f","g","h"]
 const ranks = ["8","7","6","5","4","3","2","1"]
@@ -121,10 +158,6 @@ for (x of board) {
     }
     document.getElementById("row"+Math.ceil((c+1)/8)).appendChild(span)
     c+=1
-}
-function isEmoji(str) {
-    const emojiRegex = /(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/g;
-    return emojiRegex.test(str);
 }
 function copy(str) {
     navigator.clipboard.writeText(str)
@@ -1047,4 +1080,27 @@ for (let p of pieceList) {
     //         inp.style.backgroundColor="#ff1a1a"
     //     }
     // });
+}
+function randomizeEmojis() {
+    const emojis = document.getElementsByClassName("emoji")
+    for (let x = 0; x < emojis.length; x++) {
+        const emoji = emojis[x]
+        let randomList = []
+        for (let y=0; y<=pieceList.length;y++) {
+            while (true) {
+                let x = emojiList[Math.floor(Math.random()*emojiList.length)];
+                if (randomList.includes(x)) {
+                    continue
+                }
+                randomList.push(x)
+                emoji.value=x
+                break
+            }
+        }
+        const inputEvent = new Event('input', {
+            bubbles: true,
+            cancelable: true
+        });
+        emoji.dispatchEvent(inputEvent);
+    }
 }
