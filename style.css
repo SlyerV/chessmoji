@@ -32,7 +32,7 @@ body::before {
         2px 2px 2px white, /* Light offset shadow */
         -2px -2px 2px #333; /* Dark offset shadow */
 }
-#sidebar {
+#leftbar {
     width: 200px;
     position: fixed;
     display:flex;
@@ -44,7 +44,7 @@ body::before {
     background-color: rgba(128, 128, 128, 0.5); /* Translucent gray */
     padding: 10px;
 }
-#sidebar h2 {
+h2 {
     color: #eee; /* A light gray */
     font-family: 'Georgia', serif; /* A serif font */
     font-size: 1.7em; /* Slightly larger */
@@ -54,6 +54,20 @@ body::before {
     background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent black background */
     padding: 10px;
     border-radius: 5px; /* Rounded corners */
+    flex-shrink: 0;/* Prevent the h2 from shrinking when content overflows*/
+}
+#rightbar {
+    width: 200px;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    right: 0;
+    top: 0;
+    height: 100%;
+    background-color: rgba(128, 128, 128, 0.5);
+    padding: 10px;
+    overflow-y: auto; /* Add vertical scrolling */
 }
 address {
     margin-bottom: 35px;
@@ -81,4 +95,43 @@ span {
 }
 span:hover {
  cursor:pointer
+}
+input {
+    background-color: lime;
+    width:20px
+}
+#rightbar label {
+    color: #333;
+    font-size: 1em;
+    margin: 10px 0 5px; /* Add some margin */
+    text-align: center; /* Center align text */
+    width: 90%;
+    background-color: rgba(0, 0, 0, 0.1); /* Semi-transparent black background */
+    padding: 5px;
+    border-radius: 5px;
+    font-weight: bold;
+    flex-shrink: 0; /* Prevent labels from shrinking when content overflows*/
+}
+
+/* Style for inputs in the rightbar */
+#rightbar input[type="text"] {
+    background-color: #b3ffb3; /* Light green */
+    width: 30px; /*make input width bigger*/
+    height: 30px; /*make input height bigger*/
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 1.2em; /* make font larger*/
+    text-align: center;
+    flex-shrink: 0; /* Prevent input from shrinking when content overflows*/
+}
+#cKing2 {
+    margin-bottom: 20px;
+}
+/* Style for inputs on focus */
+#rightbar input[type="text"]:focus {
+    outline: none; /* Remove default focus outline */
+    border-color: #66afe9; /* Change border color on focus */
+    box-shadow: 0 0 8px rgba(102, 175, 233, 0.6); /* Add focus shadow */
+    background-color: #ccffcc /* make background brighter on focus*/
 }

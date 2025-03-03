@@ -8,22 +8,74 @@ for (x of ranks) {
     }
 }
 // Pieces
-const rook1 = "💂🏻"
-const knight1 = "🧝🏻"
-const bishop1 = "🧙🏻"
-const queen1 = "👸🏻"
-const king1 = "🤴🏻"
-const pawn1 = "👆🏻"
-const rook2 = "💂🏿"
-const knight2 = "🧝🏿"
-const bishop2 = "🧙🏿"
-const queen2 = "👸🏿"
-const king2 = "🤴🏿"
-const pawn2 = "👇🏿"
-const black = "⬛"
-const white = "⬜"
-const whitePieces = [rook1,knight1,bishop1,queen1,king1,pawn1]
-const blackPieces = [rook2,knight2,bishop2,queen2,king2,pawn2]
+let rook1 = "💂🏻"
+let knight1 = "🧝🏻"
+let bishop1 = "🧙🏻"
+let queen1 = "👸🏻"
+let king1 = "🤴🏻"
+let pawn1 = "👆🏻"
+let rook2 = "💂🏿"
+let knight2 = "🧝🏿"
+let bishop2 = "🧙🏿"
+let queen2 = "👸🏿"
+let king2 = "🤴🏿"
+let pawn2 = "👇🏿"
+let black = "⬛"
+let white = "⬜"
+let whitePieces = [rook1,knight1,bishop1,queen1,king1,pawn1]
+let blackPieces = [rook2,knight2,bishop2,queen2,king2,pawn2]
+let pieceValueChange = {
+    "cPawn1": function(n) {
+        pawn1=n
+    },
+    "cPawn2": function(n) {
+        pawn2=n
+    },
+    "cRook1": function(n) {
+        rook1=n
+    },
+    "cRook2": function(n) {
+        rook2=n
+    },
+    "cKnight1": function(n) {
+        knight1=n
+    },
+    "cKnight2": function(n) {
+        knight2=n
+    },
+    "cBishop1": function(n) {
+        bishop1=n
+    },
+    "cBishop2": function(n) {
+        bishop2=n
+    },
+    "cQueen1": function(n) {
+        queen1=n
+    },
+    "cQueen2": function(n) {
+        queen2=n
+    },
+    "cKing1": function(n) {
+        king1=n
+    },
+    "cKing2": function(n) {
+        king2=n
+    }
+}
+let pieceMap = {
+    "cPawn1": pawn1,
+    "cPawn2": pawn2,
+    "cRook1": rook1,
+    "cRook2": rook2,
+    "cKnight1": knight1,
+    "cKnight2": knight2,
+    "cBishop1": bishop1,
+    "cBishop2": bishop2,
+    "cQueen1": queen1,
+    "cQueen2": queen2,
+    "cKing1": king1,
+    "cKing2": king2
+}
 let board = [rook2,knight2,bishop2,queen2,king2,bishop2,knight2,rook2,
     pawn2,pawn2,pawn2,pawn2,pawn2,pawn2,pawn2,pawn2,
     white,black,white,black,white,black,white,black,
@@ -70,10 +122,33 @@ for (x of board) {
     document.getElementById("row"+Math.ceil((c+1)/8)).appendChild(span)
     c+=1
 }
+function isEmoji(str) {
+    const emojiRegex = /(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/g;
+    return emojiRegex.test(str);
+}
+function copy(str) {
+    navigator.clipboard.writeText(str)
+} 
 function saveBoard() {
     board = []
     for (x of tiles) {
         board.push(document.getElementById(x).innerHTML)
+    }
+    whitePieces = [rook1,knight1,bishop1,queen1,king1,pawn1]
+    blackPieces = [rook2,knight2,bishop2,queen2,king2,pawn2]
+    pieceMap = {
+        "cPawn1": pawn1,
+        "cPawn2": pawn2,
+        "cRook1": rook1,
+        "cRook2": rook2,
+        "cKnight1": knight1,
+        "cKnight2": knight2,
+        "cBishop1": bishop1,
+        "cBishop2": bishop2,
+        "cQueen1": queen1,
+        "cQueen2": queen2,
+        "cKing1": king1,
+        "cKing2": king2
     }
 }
 function resetBoard() {
@@ -914,4 +989,62 @@ function doMove(id) {
         checkValidMoves(id)
     }
     saveBoard()
+}
+// Emoji Customization
+const pieceList = ["cPawn1","cPawn2","cKnight1","cKnight2","cBishop1","cBishop2","cRook1","cRook2","cQueen1","cQueen2","cKing1","cKing2"]
+for (let p of pieceList) {
+    document.getElementById(p).addEventListener('input', function(event) {
+        // alert(p)
+        const inp = event.target.value
+        let emoji = 0
+        for (x of inp) {
+            // Makes sure character is not a skin tone modifier, ZWJ, gender modifier, hair modifier, etc.
+            const disallowed=["🏻","🏼","🏽","🏾","🏿", "�", "‍", "♂","♀‍", "🦰","🦱","🦳","🦲","️"]
+            if (isEmoji(x)&&(!disallowed.includes(x))) {
+                // alert(x)
+                // alert(emoji)
+                // copy(x)
+                emoji+=1
+            } else if ((!isEmoji(x))&&(!disallowed.includes(x))) {
+                // alert(x)
+                // copy(x)
+                emoji=0
+                break
+            }
+        }
+        let index1 = whitePieces.indexOf(pieceMap[p]);
+        let index2 = blackPieces.indexOf(pieceMap[p]);
+        let rWhitePieces=whitePieces
+        let rBlackPieces=blackPieces
+        if (index1 > -1) { // Check if the element exists in the array
+            rWhitePieces.splice(index1, 1);
+        }
+        if (index2 > -1) {
+            rBlackPieces.splice(index2, 1);
+        }
+        if (isEmoji(inp) && (emoji == 1) && (!rWhitePieces.includes(inp)) && (!rBlackPieces.includes(inp))) {
+                try {
+                    for (x of tiles) {
+                        if (document.getElementById(x).innerHTML==pieceMap[p]) {
+                            document.getElementById(x).innerHTML=inp
+                        }
+                    }
+                    pieceValueChange[p](inp)
+                    document.getElementById(p).style.backgroundColor="#b3ffb3"
+                    saveBoard()
+                } catch(err){
+                    alert(err)
+                }
+        } else {
+            document.getElementById(p).style.backgroundColor="red"
+        }
+    });
+    // document.getElementById(p).addEventListener('focus', function() {
+    //     const inp = document.getElementbyId(p)
+    //     if (inp.style.backgroundColor=="#b3ffb3") {
+    //         inp.style.backgroundColor="#ccffcc"
+    //     } else if (inp.style.backgroundColor=="red") {
+    //         inp.style.backgroundColor="#ff1a1a"
+    //     }
+    // });
 }
