@@ -1022,9 +1022,9 @@ function doMove(id) {
             moveSFX.load()
             moveSFX.play()
         }
-        if (tile.innerHTML==king1) {
+        if (document.getElementById(selected).innerHTML==king1) {
             king1Moved=true
-        } else if (tile.innerHTML==king2) {
+        } else if (document.getElementById(selected).innerHTML==king2) {
             king2Moved=true
         } else if ((document.getElementById(selected).innerHTML==rook1)) {
             if (document.getElementById(selected).id=="h1") {
