@@ -1079,6 +1079,11 @@ function doMove(id) {
                 makeEmpty(selected)
                 document.getElementById("d1").innerHTML=rook1
                 makeEmpty("a1")
+            } else if (id=="g8") {
+                document.getElementById("g8").innerHTML=king2
+                makeEmpty(selected)
+                document.getElementById("f8").innerHTML=rook2
+                makeEmpty("h8")
             }
             saveBoard()
             checkValidMoves(id)
