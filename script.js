@@ -932,10 +932,14 @@ function checkValidMoves(id) {
         // Castle Logic
         if ((turn==1)&&(id=="e1")&&(empty(document.getElementById("g1").innerHTML))&&(empty(document.getElementById("f1").innerHTML))&&(!king1Moved)&&(!rookH1Moved)) {
             document.getElementById("g1").style.backgroundColor = castle;
+        } else if ((turn==1)&&(id=="e1")&&(empty(document.getElementById("d1").innerHTML))&&(empty(document.getElementById("c1").innerHTML))&&(empty(document.getElementById("b1").innerHTML))&&(!king1Moved)&&(!rookA1Moved)) {
+            document.getElementById("c1").style.backgroundColor = castle;
+        } else if ((turn==2)&&(id=="e8")&&(empty(document.getElementById("g8").innerHTML))&&(empty(document.getElementById("f8").innerHTML))&&(!king2Moved)&&(!rookH8Moved)) {
+            document.getElementById("g8").style.backgroundColor = castle;
         } else {
             // alert(turn)
-            // alert(piece)
-            // alert(document.getElementById("g1").innerHTML)
+            // alert(id)
+            // alert(document.getElementById("d1").innerHTML)
         }
     }
 }
@@ -1020,8 +1024,14 @@ function doMove(id) {
         }
         if (tile.innerHTML==king1) {
             king1Moved=true
-        } else if ((document.getElementById(selected).innerHTML==rook1)&&(document.getElementById(selected).id=="h1")) {
-            rookH1Moved=true
+        } else if (tile.innerHTML==king2) {
+            king2Moved=true
+        } else if ((document.getElementById(selected).innerHTML==rook1)) {
+            if (document.getElementById(selected).id=="h1") {
+                rookH1Moved=true
+            } else if (document.getElementById(selected).id=="a1") {
+                rookA1Moved=true
+            }
         }
         resetBoard()
         document.getElementById(id).innerHTML=document.getElementById(selected).innerHTML
@@ -1059,11 +1069,16 @@ function doMove(id) {
         castleSFX.play()
         try {
             resetBoard()
-            if (document.getElementById(selected).id=="e1") {
+            if (id=="g1") {
                 document.getElementById("g1").innerHTML=king1
                 makeEmpty(selected)
                 document.getElementById("f1").innerHTML=rook1
                 makeEmpty("h1")
+            } else if (id=="c1") {
+                document.getElementById("c1").innerHTML=king1
+                makeEmpty(selected)
+                document.getElementById("d1").innerHTML=rook1
+                makeEmpty("a1")
             }
             saveBoard()
             checkValidMoves(id)
