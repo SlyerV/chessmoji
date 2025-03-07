@@ -134,6 +134,7 @@ const captureSFX = new Audio("./sfx/capture.mp3")
 const moveSFX = new Audio("./sfx/move-self.mp3")
 const checkSFX = new Audio("./sfx/move-check.mp3")
 const randomizeSFX = new Audio("./sfx/notify.mp3")
+const castleSFX = new Audio("./sfx/castle.mp3")
 // Other Vars
 let selected=""
 let checked1=false
@@ -148,12 +149,19 @@ let territoryCheck = false
 let territory=[]
 let captures=[]
 let turn = 1
+let king1Moved = false
+let king2Moved = false
+let rookA1Moved = false
+let rookH1Moved = false
+let rookA8Moved = false
+let rookH8Moved = false
 // Colors
 let select = "yellow"
 let valid = "lime"
 let capture = "orange"
 let checked = "red"
 let checkPath = "transparent"
+let castle = "blue"
 // Functions
 // Span Element Creation
 let c = 0
@@ -921,6 +929,14 @@ function checkValidMoves(id) {
                 }
             }
         }
+        // Castle Logic
+        if ((turn==1)&&(id=="e1")&&(empty(document.getElementById("g1").innerHTML))&&(empty(document.getElementById("f1").innerHTML))&&(!king1Moved)&&(!rookH1Moved)) {
+            document.getElementById("g1").style.backgroundColor = castle;
+        } else {
+            // alert(turn)
+            // alert(piece)
+            // alert(document.getElementById("g1").innerHTML)
+        }
     }
 }
 function checkTerritory() {
@@ -966,13 +982,23 @@ function changeTurn() {
 }
 function doMove(id) {
     let tile = document.getElementById(id)
-    if (!whitePieces.includes(tile.innerHTML)&&(turn==1)&&(tile.style.backgroundColor!=valid)&&(tile.style.backgroundColor!=capture)) {
+    function makeEmpty(id) {
+        if ((id[1] % 2 == 0)&&(files.indexOf(id[0]) % 2 == 0)) {
+            document.getElementById(id).innerHTML=white
+        } else if ((id[1] % 2 != 0)&&(files.indexOf(id[0]) % 2 != 0)) {
+            document.getElementById(id).innerHTML=white
+        } else {
+            document.getElementById(id).innerHTML=black
+        }
+    }
+    if (!whitePieces.includes(tile.innerHTML)&&(turn==1)&&(tile.style.backgroundColor!=valid)&&(tile.style.backgroundColor!=capture)&&(tile.style.backgroundColor!=castle)) {
         return
     }
-    if (!blackPieces.includes(tile.innerHTML)&&(turn==2)&&(tile.style.backgroundColor!=valid)&&(tile.style.backgroundColor!=capture)) {
+    if (!blackPieces.includes(tile.innerHTML)&&(turn==2)&&(tile.style.backgroundColor!=valid)&&(tile.style.backgroundColor!=capture)&&(tile.style.backgroundColor!=castle)) {
         return
     }
     if (tile.style.backgroundColor==select) {
+        // alert("s")
         if ((checked1&&tile.innerHTML==king1)||(checked2&&tile.innerHTML==king2)) {
             // changeTurn()
             // checkTerritory()
@@ -984,12 +1010,18 @@ function doMove(id) {
         selected=""
         resetBoard()
     } else if ((tile.style.backgroundColor==valid)||(tile.style.backgroundColor==capture)) {
+        // alert("v")
         if (tile.style.backgroundColor==capture) {
             captureSFX.load()
             captureSFX.play()
         } else {
             moveSFX.load()
             moveSFX.play()
+        }
+        if (tile.innerHTML==king1) {
+            king1Moved=true
+        } else if ((document.getElementById(selected).innerHTML==rook1)&&(document.getElementById(selected).id=="h1")) {
+            rookH1Moved=true
         }
         resetBoard()
         document.getElementById(id).innerHTML=document.getElementById(selected).innerHTML
@@ -1022,7 +1054,27 @@ function doMove(id) {
         resetBoard()
         checkTerritory()
         changeTurn()
+    } else if (tile.style.backgroundColor==castle) {
+        castleSFX.load()
+        castleSFX.play()
+        try {
+            resetBoard()
+            if (document.getElementById(selected).id=="e1") {
+                document.getElementById("g1").innerHTML=king1
+                makeEmpty(selected)
+                document.getElementById("f1").innerHTML=rook1
+                makeEmpty("h1")
+            }
+            saveBoard()
+            checkValidMoves(id)
+            resetBoard()
+            checkTerritory()
+            changeTurn()
+        } catch (err) {
+            alert(err)
+        }
     } else {
+        // alert(tile.style.backgroundColor)
         resetBoard()
         tile.style.backgroundColor=select
         selected=id
