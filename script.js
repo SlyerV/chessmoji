@@ -1,5 +1,6 @@
 // Fetching Emoji List from Unicode
 let emojiList = [];
+let faceList = [];
 const regIndicators = [
     '🇦', '🇧', '🇨', '🇩', '🇪', '🇫',
     '🇬', '🇭', '🇮', '🇯', '🇰', '🇱',
@@ -36,7 +37,12 @@ function sliceColumn() {
 
 sliceColumn().then(() => {
 });
-
+fetch('face-list.txt')
+    .then(response => response.text())
+    .then(data => {
+        const faces = data.split('\n');
+        faces.forEach(face => faceList.push(face))
+    })
 // Chess Tiles
 const files = ["a","b","c","d","e","f","g","h"]
 const ranks = ["8","7","6","5","4","3","2","1"]
@@ -1034,7 +1040,7 @@ for (let p of pieceList) {
         for (x of inp) {
             // Makes sure character is not a skin tone modifier, ZWJ, gender modifier, hair modifier, etc.
             const disallowed=["🏻","🏼","🏽","🏾","🏿", "�", "‍", "♂","♀‍", "🦰","🦱","🦳","🦲","️"]
-            if (isEmoji(x)&&(!disallowed.includes(x))) {
+            if (isEmoji(x)&&(!disallowed.includes(x))&&(!regIndicators.includes(x))) {
                 // alert(x)
                 // alert(emoji)
                 // copy(x)
@@ -1082,7 +1088,7 @@ for (let p of pieceList) {
     //     }
     // });
 }
-function randomizeEmojis() {
+function randomizeEmojis(list) {
     randomizeSFX.load()
     randomizeSFX.play()
     const emojis = document.getElementsByClassName("emoji")
@@ -1091,8 +1097,8 @@ function randomizeEmojis() {
         let randomList = []
         for (let y=0; y<=pieceList.length;y++) {
             while (true) {
-                let x = emojiList[Math.floor(Math.random()*emojiList.length)];
-                if (randomList.includes(x)) {
+                let x = list[Math.floor(Math.random()*list.length)];
+                if ((randomList.includes(x))||(disallowedChars.includes(x))||(regIndicators.includes(x))) {
                     continue
                 }
                 randomList.push(x)
