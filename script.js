@@ -334,7 +334,6 @@ function checkValidMoves(id) {
                     blocked=false
                     blockable=false
                     piece.style.backgroundColor=select
-                    return
                 } catch (err) {
                     alert(err)
                 }
@@ -455,7 +454,6 @@ function checkValidMoves(id) {
                     blocked=false
                     blockable=false
                     piece.style.backgroundColor=select
-                    return
                 } catch (err) {
                     alert(err)
                 }
