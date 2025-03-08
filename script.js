@@ -1062,7 +1062,8 @@ function doMove(id) {
                 document.getElementById(id).innerHTML=knight1
             } else if (confirm("Promote to Rook?")) {
                 document.getElementById(id).innerHTML=rook1
-            } else if (confirm("Promote to Bishop?")) {
+            } else {
+                alert("Promote to Bishop?")
                 document.getElementById(id).innerHTML=bishop1
             }
         } else if ((document.getElementById(id).innerHTML==pawn2)&&(id[1]=="1")) {
@@ -1072,7 +1073,8 @@ function doMove(id) {
                 document.getElementById(id).innerHTML=knight2
             } else if (confirm("Promote to Rook?")) {
                 document.getElementById(id).innerHTML=rook2
-            } else if (confirm("Promote to Bishop?")) {
+            } else {
+                alert("Promote to Bishop?")
                 document.getElementById(id).innerHTML=bishop2
             }
         }
