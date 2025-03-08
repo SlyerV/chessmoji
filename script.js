@@ -156,6 +156,46 @@ let rookA1Moved = false
 let rookH1Moved = false
 let rookA8Moved = false
 let rookH8Moved = false
+let whiteMaterial = ""
+let wMaterialList = []
+let blackMaterial = ""
+let bMaterialList = []
+let valueMap = {
+    [pawn1]:1,
+    [pawn2]:1,
+    [knight1]:3,
+    [knight2]:3,
+    [bishop1]:3,
+    [bishop2]:3,
+    [rook1]:5,
+    [rook2]:5,
+    [queen1]:9,
+    [queen2]:9
+}
+let nameMap = {
+    [pawn1]:"pawn1",
+    [pawn2]:"pawn2",
+    [knight1]:"knight1",
+    [knight2]:"knight2",
+    [bishop1]:"bishop1",
+    [bishop2]:"bishop2",
+    [rook1]:"rook1",
+    [rook2]:"rook2",
+    [queen1]:"queen1",
+    [queen2]:"queen2"
+}
+let rNameMap = {
+    "pawn1":pawn1,
+    "pawn2":pawn2,
+    "knight1":knight1,
+    "knight2":knight2,
+    "bishop1":bishop1,
+    "bishop2":bishop2,
+    "rook1":rook1,
+    "rook2":rook2,
+    "queen1":queen1,
+    "queen2":queen2
+}
 // Colors
 let select = "yellow"
 let valid = "lime"
@@ -200,6 +240,70 @@ function saveBoard() {
         "cQueen2": queen2,
         "cKing1": king1,
         "cKing2": king2
+    }
+    try {
+        valueMap = {
+            [pawn1]:1,
+            [pawn2]:1,
+            [knight1]:3,
+            [knight2]:3,
+            [bishop1]:3,
+            [bishop2]:3,
+            [rook1]:5,
+            [rook2]:5,
+            [queen1]:9,
+            [queen2]:9
+        }
+        nameMap = {
+            [pawn1]:"pawn1",
+            [pawn2]:"pawn2",
+            [knight1]:"knight1",
+            [knight2]:"knight2",
+            [bishop1]:"bishop1",
+            [bishop2]:"bishop2",
+            [rook1]:"rook1",
+            [rook2]:"rook2",
+            [queen1]:"queen1",
+            [queen2]:"queen2"
+        }
+        rNameMap = {
+            "pawn1":pawn1,
+            "pawn2":pawn2,
+            "knight1":knight1,
+            "knight2":knight2,
+            "bishop1":bishop1,
+            "bishop2":bishop2,
+            "rook1":rook1,
+            "rook2":rook2,
+            "queen1":queen1,
+            "queen2":queen2
+        }
+        whiteMaterial=""
+        let wValue = 0
+        for (let x of wMaterialList) {
+            whiteMaterial+=rNameMap[x]
+            wValue+=valueMap[rNameMap[x]]
+        }
+        blackMaterial=""
+        let bValue = 0
+        for (let y of bMaterialList) {
+            blackMaterial+=rNameMap[y]
+            bValue+=valueMap[rNameMap[y]]
+        }
+        if (whiteMaterial=="") {
+            whiteMaterial="N/A"
+        } else if (!isNaN(wValue)) {
+            document.getElementById("wValue").innerHTML="+"+wValue
+        }
+        if (blackMaterial=="") {
+            blackMaterial="N/A"
+        } else if (!isNaN(bValue)) {
+            document.getElementById("bValue").innerHTML="+"+bValue
+        }
+        document.getElementById("wMaterial").innerHTML=whiteMaterial
+        document.getElementById("bMaterial").innerHTML=blackMaterial
+    } catch (err) {
+        alert(err.stack)
     }
 }
 function resetBoard() {
@@ -1024,6 +1128,15 @@ function doMove(id) {
         } else if (tile.style.backgroundColor==capture) {
             captureSFX.load()
             captureSFX.play()
+            if (turn==1){
+                whiteMaterial+=tile.innerHTML
+                wMaterialList.push(nameMap[tile.innerHTML])
+                document.getElementById("wMaterial").innerHTML=whiteMaterial
+            } else {
+                blackMaterial+=tile.innerHTML
+                bMaterialList.push(nameMap[tile.innerHTML])
+                document.getElementById("bMaterial").innerHTML=blackMaterial
+            }
         } else {
             moveSFX.load()
             moveSFX.play()

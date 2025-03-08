@@ -102,7 +102,7 @@ input {
     background-color: lime;
     width:20px
 }
-#rightbar label {
+label {
     color: #333;
     font-size: 1em;
     margin: 10px 0 5px; /* Add some margin */
@@ -114,7 +114,13 @@ input {
     font-weight: bold;
     flex-shrink: 0; /* Prevent labels from shrinking when content overflows*/
 }
-
+p {
+    color: #333;
+    font-size: 16px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    margin: 0px 0 0px;
+    text-align: center; /* Center align text */
+}
 /* Style for inputs in the rightbar */
 #rightbar input[type="text"] {
     background-color: #b3ffb3; /* Light green */
