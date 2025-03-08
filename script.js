@@ -936,6 +936,8 @@ function checkValidMoves(id) {
             document.getElementById("c1").style.backgroundColor = castle;
         } else if ((turn==2)&&(id=="e8")&&(empty(document.getElementById("g8").innerHTML))&&(empty(document.getElementById("f8").innerHTML))&&(!king2Moved)&&(!rookH8Moved)) {
             document.getElementById("g8").style.backgroundColor = castle;
+        } else if ((turn==2)&&(id=="e8")&&(empty(document.getElementById("d8").innerHTML))&&(empty(document.getElementById("c8").innerHTML))&&(empty(document.getElementById("b8").innerHTML))&&(!king2Moved)&&(!rookA8Moved)) {
+            document.getElementById("c8").style.backgroundColor = castle;
         } else {
             // alert(turn)
             // alert(id)
@@ -1026,11 +1028,17 @@ function doMove(id) {
             king1Moved=true
         } else if (document.getElementById(selected).innerHTML==king2) {
             king2Moved=true
-        } else if ((document.getElementById(selected).innerHTML==rook1)) {
+        } else if (document.getElementById(selected).innerHTML==rook1) {
             if (document.getElementById(selected).id=="h1") {
                 rookH1Moved=true
             } else if (document.getElementById(selected).id=="a1") {
                 rookA1Moved=true
+            }
+        } else if (document.getElementById(selected).innerHTML==rook2) {
+            if (document.getElementById(selected).id=="h8") {
+                rookH8Moved=true
+            } else if (document.getElementById(selected).id=="a8") {
+                rookA8Moved=true
             }
         }
         resetBoard()
@@ -1084,6 +1092,11 @@ function doMove(id) {
                 makeEmpty(selected)
                 document.getElementById("f8").innerHTML=rook2
                 makeEmpty("h8")
+            } else if (id=="c8") {
+                document.getElementById("c8").innerHTML=king2
+                makeEmpty(selected)
+                document.getElementById("d8").innerHTML=rook2
+                makeEmpty("a8")
             }
             saveBoard()
             checkValidMoves(id)
