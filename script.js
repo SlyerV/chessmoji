@@ -930,13 +930,13 @@ function checkValidMoves(id) {
             }
         }
         // Castle Logic
-        if ((turn==1)&&(id=="e1")&&(empty(document.getElementById("g1").innerHTML))&&(empty(document.getElementById("f1").innerHTML))&&(!king1Moved)&&(!rookH1Moved)) {
+        if ((turn==1)&&(id=="e1")&&(!checked1)&&(empty(document.getElementById("g1").innerHTML))&&(empty(document.getElementById("f1").innerHTML))&&(!king1Moved)&&(!rookH1Moved)&&(!territory.includes("f1"))&&(!territory.includes("g1"))) {
             document.getElementById("g1").style.backgroundColor = castle;
-        } else if ((turn==1)&&(id=="e1")&&(empty(document.getElementById("d1").innerHTML))&&(empty(document.getElementById("c1").innerHTML))&&(empty(document.getElementById("b1").innerHTML))&&(!king1Moved)&&(!rookA1Moved)) {
+        } else if ((turn==1)&&(id=="e1")&&(!checked1)&&(empty(document.getElementById("d1").innerHTML))&&(empty(document.getElementById("c1").innerHTML))&&(empty(document.getElementById("b1").innerHTML))&&(!king1Moved)&&(!rookA1Moved)&&(!territory.includes("d1"))&&(!territory.includes("c1"))) {
             document.getElementById("c1").style.backgroundColor = castle;
-        } else if ((turn==2)&&(id=="e8")&&(empty(document.getElementById("g8").innerHTML))&&(empty(document.getElementById("f8").innerHTML))&&(!king2Moved)&&(!rookH8Moved)) {
+        } else if ((turn==2)&&(id=="e8")&&(!checked2)&&(empty(document.getElementById("g8").innerHTML))&&(empty(document.getElementById("f8").innerHTML))&&(!king2Moved)&&(!rookH8Moved)&&(!territory.includes("f8"))&&(!territory.includes("g8"))) {
             document.getElementById("g8").style.backgroundColor = castle;
-        } else if ((turn==2)&&(id=="e8")&&(empty(document.getElementById("d8").innerHTML))&&(empty(document.getElementById("c8").innerHTML))&&(empty(document.getElementById("b8").innerHTML))&&(!king2Moved)&&(!rookA8Moved)) {
+        } else if ((turn==2)&&(id=="e8")&&(!checked2)&&(empty(document.getElementById("d8").innerHTML))&&(empty(document.getElementById("c8").innerHTML))&&(empty(document.getElementById("b8").innerHTML))&&(!king2Moved)&&(!rookA8Moved)&&(!territory.includes("d8"))&&(!territory.includes("c8"))) {
             document.getElementById("c8").style.backgroundColor = castle;
         } else {
             // alert(turn)
