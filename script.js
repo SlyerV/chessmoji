@@ -135,6 +135,7 @@ const moveSFX = new Audio("./sfx/move-self.mp3")
 const checkSFX = new Audio("./sfx/move-check.mp3")
 const randomizeSFX = new Audio("./sfx/notify.mp3")
 const castleSFX = new Audio("./sfx/castle.mp3")
+const promoteSFX = new Audio("./sfx/promote.mp3")
 // Other Vars
 let selected=""
 let checked1=false
@@ -1017,27 +1018,31 @@ function doMove(id) {
         resetBoard()
     } else if ((tile.style.backgroundColor==valid)||(tile.style.backgroundColor==capture)) {
         // alert("v")
-        if (tile.style.backgroundColor==capture) {
+        if (((document.getElementById(selected).innerHTML==pawn1)&&(id[1]==8))||((document.getElementById(selected).innerHTML==pawn2)&&(id[1]==1))) {
+            promoteSFX.load()
+            promoteSFX.play()
+        } else if (tile.style.backgroundColor==capture) {
             captureSFX.load()
             captureSFX.play()
         } else {
             moveSFX.load()
             moveSFX.play()
         }
-        if (document.getElementById(selected).innerHTML==king1) {
+        const moved = document.getElementById(selected)
+        if (moved.innerHTML==king1) {
             king1Moved=true
-        } else if (document.getElementById(selected).innerHTML==king2) {
+        } else if (moved.innerHTML==king2) {
             king2Moved=true
-        } else if (document.getElementById(selected).innerHTML==rook1) {
-            if (document.getElementById(selected).id=="h1") {
+        } else if (moved.innerHTML==rook1) {
+            if (moved.id=="h1") {
                 rookH1Moved=true
-            } else if (document.getElementById(selected).id=="a1") {
+            } else if (moved.id=="a1") {
                 rookA1Moved=true
             }
-        } else if (document.getElementById(selected).innerHTML==rook2) {
-            if (document.getElementById(selected).id=="h8") {
+        } else if (moved.innerHTML==rook2) {
+            if (moved.id=="h8") {
                 rookH8Moved=true
-            } else if (document.getElementById(selected).id=="a8") {
+            } else if (moved.id=="a8") {
                 rookA8Moved=true
             }
         }
@@ -1049,6 +1054,27 @@ function doMove(id) {
             document.getElementById(selected).innerHTML=white
         } else {
             document.getElementById(selected).innerHTML=black
+        }
+        if ((document.getElementById(id).innerHTML==pawn1)&&(id[1]=="8")) {
+            if (confirm("Promote to Queen?")) {
+                document.getElementById(id).innerHTML=queen1
+            } else if (confirm("Promote to Knight?")) {
+                document.getElementById(id).innerHTML=knight1
+            } else if (confirm("Promote to Rook?")) {
+                document.getElementById(id).innerHTML=rook1
+            } else if (confirm("Promote to Bishop?")) {
+                document.getElementById(id).innerHTML=bishop1
+            }
+        } else if ((document.getElementById(id).innerHTML==pawn2)&&(id[1]=="1")) {
+            if (confirm("Promote to Queen?")) {
+                document.getElementById(id).innerHTML=queen2
+            } else if (confirm("Promote to Knight?")) {
+                document.getElementById(id).innerHTML=knight2
+            } else if (confirm("Promote to Rook?")) {
+                document.getElementById(id).innerHTML=rook2
+            } else if (confirm("Promote to Bishop?")) {
+                document.getElementById(id).innerHTML=bishop2
+            }
         }
         if (checked1) {
             checked1=false
