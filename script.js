@@ -463,7 +463,7 @@ function checkValidMoves(id) {
                 if (!territoryCheck) {
                     checkSFX.load()
                     checkSFX.play()
-                    document.getElementById(targetId).style.backgroundColor=checked
+                    document.getElementById(addFile(-1)+addRank(1)).style.backgroundColor=checked
                     if (turn==1) {
                         checked2=true
                     } else {
@@ -493,7 +493,7 @@ function checkValidMoves(id) {
                 if (!territoryCheck) {
                     checkSFX.load()
                     checkSFX.play()
-                    document.getElementById(targetId).style.backgroundColor=checked
+                    document.getElementById(addFile(1)+addRank(1)).style.backgroundColor=checked
                     if (turn==1) {
                         checked2=true
                     } else {
@@ -583,7 +583,7 @@ function checkValidMoves(id) {
                 if (!territoryCheck) {
                     checkSFX.load()
                     checkSFX.play()
-                    document.getElementById(targetId).style.backgroundColor=checked
+                    document.getElementById(addFile(-1)+addRank(-1)).style.backgroundColor=checked
                     if (turn==1) {
                         checked2=true
                     } else {
@@ -613,7 +613,7 @@ function checkValidMoves(id) {
                 if (!territoryCheck) {
                     checkSFX.load()
                     checkSFX.play()
-                    document.getElementById(targetId).style.backgroundColor=checked
+                    document.getElementById(addFile(1)+addRank(-1)).style.backgroundColor=checked
                     if (turn==1) {
                         checked2=true
                     } else {
