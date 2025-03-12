@@ -1123,7 +1123,7 @@ function doMove(id) {
         }
         selected=""
         resetBoard()
-    } else if ((tile.style.backgroundColor==valid)||(tile.style.backgroundColor==capture)) {
+    } else if ((tile.style.backgroundColor==valid)||(tile.style.backgroundColor==capture)||(tile.style.backgroundColor==castle)) {
         const moved = document.getElementById(selected)
         const pawns = [pawn1,pawn2]
         // const knights = [knight1,knight2]
@@ -1154,11 +1154,13 @@ function doMove(id) {
             try {
                 moveCount+=1
                 div = document.createElement("div")
-                div.style.width="120px"
+                div.style.width="150px"
                 div.style.display="flex"
                 div.style.flexDirection="row"
                 div.style.justifyContent="flex-start"
-                aNotation.appendChild(document.createElement("br"))
+                if (moveCount!=1) {
+                    aNotation.appendChild(document.createElement("br"))
+                }
                 sp.innerHTML=`${moveCount}. `
                 sp.style.textAlign="left"
                 aNotation.appendChild(div)
@@ -1191,6 +1193,49 @@ function doMove(id) {
             } else {
                 notation=notationCorrespondence[moved.innerHTML]+"x"+id
             }
+        } else if (tile.style.backgroundColor==castle) {
+            castleSFX.load()
+            castleSFX.play()
+            if (id=="g1") {
+                document.getElementById("g1").innerHTML=king1
+                makeEmpty(selected)
+                document.getElementById("f1").innerHTML=rook1
+                makeEmpty("h1")
+                notation="O-O"
+            } else if (id=="c1") {
+                document.getElementById("c1").innerHTML=king1
+                makeEmpty(selected)
+                document.getElementById("d1").innerHTML=rook1
+                makeEmpty("a1")
+                notation="O-O-O"
+            } else if (id=="g8") {
+                document.getElementById("g8").innerHTML=king2
+                makeEmpty(selected)
+                document.getElementById("f8").innerHTML=rook2
+                makeEmpty("h8")
+                notation="O-O"
+            } else if (id=="c8") {
+                document.getElementById("c8").innerHTML=king2
+                makeEmpty(selected)
+                document.getElementById("d8").innerHTML=rook2
+                makeEmpty("a8")
+                notation="O-O-O"
+            }
+            if ((checked1)||(checked2)) {
+                notation+="+"
+            }
+            sp.innerHTML+=notation
+            if (turn==2) {
+                sp.style.marginLeft="20px"
+            }
+            container.appendChild(sp)
+            div.appendChild(container)
+            saveBoard()
+            checkValidMoves(id)
+            resetBoard()
+            checkTerritory()
+            changeTurn()
+            return
         } else {
             moveSFX.load()
             moveSFX.play()
@@ -1286,40 +1331,6 @@ function doMove(id) {
         resetBoard()
         checkTerritory()
         changeTurn()
-    } else if (tile.style.backgroundColor==castle) {
-        castleSFX.load()
-        castleSFX.play()
-        try {
-            resetBoard()
-            if (id=="g1") {
-                document.getElementById("g1").innerHTML=king1
-                makeEmpty(selected)
-                document.getElementById("f1").innerHTML=rook1
-                makeEmpty("h1")
-            } else if (id=="c1") {
-                document.getElementById("c1").innerHTML=king1
-                makeEmpty(selected)
-                document.getElementById("d1").innerHTML=rook1
-                makeEmpty("a1")
-            } else if (id=="g8") {
-                document.getElementById("g8").innerHTML=king2
-                makeEmpty(selected)
-                document.getElementById("f8").innerHTML=rook2
-                makeEmpty("h8")
-            } else if (id=="c8") {
-                document.getElementById("c8").innerHTML=king2
-                makeEmpty(selected)
-                document.getElementById("d8").innerHTML=rook2
-                makeEmpty("a8")
-            }
-            saveBoard()
-            checkValidMoves(id)
-            resetBoard()
-            checkTerritory()
-            changeTurn()
-        } catch (err) {
-            alert(err)
-        }
     } else {
         // alert(tile.style.backgroundColor)
         resetBoard()
