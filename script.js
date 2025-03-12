@@ -1,4 +1,4 @@
-// Fetching Emoji List from Unicode
+// Fetching Emoji List from Unicode ('emoji-list.txt')
 let emojiList = [];
 let faceList = [];
 const regIndicators = [
@@ -206,7 +206,6 @@ let capture = "orange"
 let checked = "red"
 let checkPath = "transparent"
 let castle = "blue"
-// Functions
 // Span Element Creation
 let c = 0
 for (x of board) {
@@ -220,6 +219,7 @@ for (x of board) {
     document.getElementById("row"+Math.ceil((c+1)/8)).appendChild(span)
     c+=1
 }
+// Functions
 function copy(str) {
     navigator.clipboard.writeText(str)
 } 
