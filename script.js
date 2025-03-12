@@ -15,7 +15,7 @@ function isEmoji(str) {
 }
 function sliceColumn() {
     return new Promise((resolve, reject) => {
-        fetch('emoji-list.txt')
+        fetch('./txts/emoji-list.txt')
             .then(response => response.text())
             .then(data => {
                 const rows = data.split('\n');
@@ -37,7 +37,7 @@ function sliceColumn() {
 
 sliceColumn().then(() => {
 });
-fetch('face-list.txt')
+fetch('./txts/face-list.txt')
     .then(response => response.text())
     .then(data => {
         const faces = data.split('\n');
