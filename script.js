@@ -196,6 +196,9 @@ let rNameMap = {
     "queen1":queen1,
     "queen2":queen2
 }
+let moveCount = 0
+let notation = ""
+let div
 // Colors
 let select = "yellow"
 let valid = "lime"
@@ -1121,7 +1124,53 @@ function doMove(id) {
         selected=""
         resetBoard()
     } else if ((tile.style.backgroundColor==valid)||(tile.style.backgroundColor==capture)) {
-        // alert("v")
+        const moved = document.getElementById(selected)
+        const pawns = [pawn1,pawn2]
+        // const knights = [knight1,knight2]
+        // const bishops = [bishop1,bishop2]
+        // const rooks = [rook1,rook2]
+        // const queens = [queen1,queen2]
+        // const kings = [king1,king2]
+        const notationCorrespondence = {
+            [pawn1]:"",
+            [pawn2]:"",
+            [knight1]:"N",
+            [knight2]:"N",
+            [bishop1]:"B",
+            [bishop2]:"B",
+            [rook1]:"R",
+            [rook2]:"R",
+            [queen1]:"Q",
+            [queen2]:"Q",
+            [king1]:"K",
+            [king2]:"K"
+        }
+        // const spc = "&nbsp".repeat(7)
+        const aNotation = document.getElementById("aNotation")
+        const sp = document.createElement('p')
+        const container = document.createElement("div")
+        notation=""
+        if (turn == 1) {
+            try {
+                moveCount+=1
+                div = document.createElement("div")
+                div.style.width="120px"
+                div.style.display="flex"
+                div.style.flexDirection="row"
+                div.style.justifyContent="flex-start"
+                aNotation.appendChild(document.createElement("br"))
+                sp.innerHTML=`${moveCount}. `
+                sp.style.textAlign="left"
+                aNotation.appendChild(div)
+                container.style.width="70px"
+                // container.style.border = "1px solid black"
+                // div.style.border="1px solid red"
+                container.appendChild(sp)
+                div.appendChild(container)
+            } catch (err) {
+                alert(err)
+            }
+        }
         if (((document.getElementById(selected).innerHTML==pawn1)&&(id[1]==8))||((document.getElementById(selected).innerHTML==pawn2)&&(id[1]==1))) {
             promoteSFX.load()
             promoteSFX.play()
@@ -1137,11 +1186,16 @@ function doMove(id) {
                 bMaterialList.push(nameMap[tile.innerHTML])
                 document.getElementById("bMaterial").innerHTML=blackMaterial
             }
+            if (pawns.includes(moved.innerHTML)) {
+                notation=moved.id[0]+"x"+id
+            } else {
+                notation=notationCorrespondence[moved.innerHTML]+"x"+id
+            }
         } else {
             moveSFX.load()
             moveSFX.play()
+            notation=notationCorrespondence[moved.innerHTML]+id
         }
-        const moved = document.getElementById(selected)
         if (moved.innerHTML==king1) {
             king1Moved=true
         } else if (moved.innerHTML==king2) {
@@ -1169,26 +1223,36 @@ function doMove(id) {
             document.getElementById(selected).innerHTML=black
         }
         if ((document.getElementById(id).innerHTML==pawn1)&&(id[1]=="8")) {
+            notation=id+"="
             if (confirm("Promote to Queen?")) {
                 document.getElementById(id).innerHTML=queen1
+                notation+="Q"
             } else if (confirm("Promote to Knight?")) {
                 document.getElementById(id).innerHTML=knight1
+                notation+="N"
             } else if (confirm("Promote to Rook?")) {
                 document.getElementById(id).innerHTML=rook1
+                notation+="R"
             } else {
                 alert("Promote to Bishop?")
                 document.getElementById(id).innerHTML=bishop1
+                notation+="B"
             }
         } else if ((document.getElementById(id).innerHTML==pawn2)&&(id[1]=="1")) {
+            notation=id+"="
             if (confirm("Promote to Queen?")) {
                 document.getElementById(id).innerHTML=queen2
+                notation+="Q"
             } else if (confirm("Promote to Knight?")) {
                 document.getElementById(id).innerHTML=knight2
+                notation+="N"
             } else if (confirm("Promote to Rook?")) {
                 document.getElementById(id).innerHTML=rook2
+                notation+="R"
             } else {
                 alert("Promote to Bishop?")
                 document.getElementById(id).innerHTML=bishop2
+                notation+="B"
             }
         }
         if (checked1) {
@@ -1210,6 +1274,15 @@ function doMove(id) {
         }
         saveBoard()
         checkValidMoves(id)
+        if ((checked1)||(checked2)) {
+            notation+="+"
+        }
+        sp.innerHTML+=notation
+        if (turn==2) {
+            sp.style.marginLeft="20px"
+        }
+        container.appendChild(sp)
+        div.appendChild(container)
         resetBoard()
         checkTerritory()
         changeTurn()

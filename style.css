@@ -44,7 +44,9 @@ body::before {
     top: 0;
     height: 100%;
     background-color: rgba(128, 128, 128, 0.5); /* Translucent gray */
-    padding: 10px;
+    padding: 10px 0;
+    box-sizing: border-box;
+    overflow-y: auto;
 }
 h2 {
     color: #eee; /* A light gray */
@@ -58,6 +60,9 @@ h2 {
     border-radius: 5px; /* Rounded corners */
     flex-shrink: 0;/* Prevent the h2 from shrinking when content overflows*/
 }
+#aNotation p {
+    font-size:15px;
+}
 #rightbar {
     width: 200px;
     position: fixed;
@@ -68,7 +73,8 @@ h2 {
     top: 0;
     height: 100%;
     background-color: rgba(128, 128, 128, 0.5);
-    padding: 10px;
+    padding: 10px 0;
+    box-sizing: border-box;
     overflow-y: auto; /* Add vertical scrolling */
 }
 address {
@@ -169,6 +175,6 @@ p {
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2); /* Smaller shadow when clicked */
     /* transform: translateY(2px); Move the button down slightly */
 }
-#randomizeAll {
+/* #randomizeAll {
     margin-bottom: 25px;
-}
+} */
