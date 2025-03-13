@@ -1158,8 +1158,33 @@ function doMove(id) {
                 div.style.display="flex"
                 div.style.flexDirection="row"
                 div.style.justifyContent="flex-start"
-                if (moveCount!=1) {
-                    aNotation.appendChild(document.createElement("br"))
+                aNotation.appendChild(document.createElement("br"))
+                if (moveCount==1) {
+                    const openingMatch = {
+                        "e4":"King's Pawn Opening",
+                        "d4":"Queen's Pawn Opening",
+                        "Nf3":"Réti Opening",
+                        "Nc3":"Van Geet Opening",
+                        "a3":"Anderssen Opening",
+                        "a4":"Ware Opening",
+                        "b3":"Nimzowitsch-Larsen Attack",
+                        "b4":"Polish Opening",
+                        "c3":"Saragossa Opening",
+                        "c4":"English Opening",
+                        "d3":"Mieses Opening",
+                        "e3":"Van 't Kruijs Opening",
+                        "f3":"Barnes Opening",
+                        "f4":"Bird's Opening",
+                        "g3":"King's Fianchetto Opening",
+                        "g4":"Grob Opening",
+                        "h3":"Clemenz Opening",
+                        "h4":"Kádas Opening"
+                    }
+                    if (pawns.includes(moved.innerHTML)) {
+                        document.getElementById("opening").innerHTML=openingMatch[id]
+                    } else {
+                        document.getElementById("opening").innerHTML=openingMatch[notationCorrespondence[moved.innerHTML]+id]
+                    }
                 }
                 sp.innerHTML=`${moveCount}. `
                 sp.style.textAlign="left"

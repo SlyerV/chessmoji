@@ -175,6 +175,11 @@ p {
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2); /* Smaller shadow when clicked */
     /* transform: translateY(2px); Move the button down slightly */
 }
+#opening {
+    text-decoration: underline;
+    /* font-weight:bold; */
+    font-size:0.9em;
+}
 /* #randomizeAll {
     margin-bottom: 25px;
 } */
