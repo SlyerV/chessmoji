@@ -1204,6 +1204,15 @@ function doMove(id) {
         } else if (tile.style.backgroundColor==capture) {
             captureSFX.load()
             captureSFX.play()
+            if (id=="h1") {
+                rookH1Moved=false
+            } else if (id=="a1") {
+                rookA1Moved=false
+            } else if (id=="h8") {
+                rookH8Moved=false
+            } else if (id=="a8") {
+                rookA8Moved=false
+            }
             if (turn==1){
                 whiteMaterial+=tile.innerHTML
                 wMaterialList.push(nameMap[tile.innerHTML])
