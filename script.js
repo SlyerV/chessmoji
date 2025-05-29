@@ -1205,13 +1205,13 @@ function doMove(id) {
             captureSFX.load()
             captureSFX.play()
             if (id=="h1") {
-                rookH1Moved=false
+                rookH1Moved=true
             } else if (id=="a1") {
-                rookA1Moved=false
+                rookA1Moved=true
             } else if (id=="h8") {
-                rookH8Moved=false
+                rookH8Moved=true
             } else if (id=="a8") {
-                rookA8Moved=false
+                rookA8Moved=true
             }
             if (turn==1){
                 whiteMaterial+=tile.innerHTML
